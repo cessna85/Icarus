@@ -1,0 +1,392 @@
+<sleigh version="2" bigendian="false" align="1" uniqbase="0x10">
+<spaces defaultspace="p">
+<space_other name="OTHER" index="1" bigendian="false" delay="0" size="8" physical="false"/>
+<space_unique name="unique" index="2" bigendian="false" delay="0" size="4" physical="true"/>
+<space name="p" index="3" bigendian="false" delay="1" size="3" physical="true"/>
+<space name="x" index="4" bigendian="false" delay="1" size="3" physical="true"/>
+<space name="y" index="5" bigendian="false" delay="1" size="3" physical="true"/>
+<space name="register" index="6" bigendian="false" delay="0" size="3" physical="true"/>
+</spaces>
+<symbol_table scopesize="2" symbolsize="127">
+<scope id="0x0" parent="0x0"/>
+<scope id="0x1" parent="0x0"/>
+<subtable_sym_head name="instruction" id="0x0" scope="0x0"/>
+<start_sym_head name="inst_start" id="0x1" scope="0x0"/>
+<end_sym_head name="inst_next" id="0x2" scope="0x0"/>
+<varnode_sym_head name="X" id="0x3" scope="0x0"/>
+<varnode_sym_head name="Y" id="0x4" scope="0x0"/>
+<varnode_sym_head name="X1" id="0x5" scope="0x0"/>
+<varnode_sym_head name="X0" id="0x6" scope="0x0"/>
+<varnode_sym_head name="Y1" id="0x7" scope="0x0"/>
+<varnode_sym_head name="Y0" id="0x8" scope="0x0"/>
+<varnode_sym_head name="A" id="0x9" scope="0x0"/>
+<varnode_sym_head name="B" id="0xa" scope="0x0"/>
+<varnode_sym_head name="A2" id="0xb" scope="0x0"/>
+<varnode_sym_head name="B2" id="0xc" scope="0x0"/>
+<varnode_sym_head name="A1" id="0xd" scope="0x0"/>
+<varnode_sym_head name="A0" id="0xe" scope="0x0"/>
+<varnode_sym_head name="B1" id="0xf" scope="0x0"/>
+<varnode_sym_head name="B0" id="0x10" scope="0x0"/>
+<varnode_sym_head name="OMR" id="0x11" scope="0x0"/>
+<varnode_sym_head name="SCS" id="0x12" scope="0x0"/>
+<varnode_sym_head name="EOM" id="0x13" scope="0x0"/>
+<varnode_sym_head name="COM" id="0x14" scope="0x0"/>
+ name="PEN" id="0x15" scope="0x0" name="MSW" id="0x16" scope="0x0" name="SEN" id="0x17" scope="0x0" name="WRP" id="0x18" scope="0x0" name="EOV" id="0x19" scope="0x0" name="EUN" id="0x1a" scope="0x0" name="XYS" id="0x1b" scope="0x0" name="ATE" id="0x1c" scope="0x0" name="APD" id="0x1d" scope="0x0" name="ABE" id="0x1e" scope="0x0" name="BRT" id="0x1f" scope="0x0" name="TAS" id="0x20" scope="0x0" name="BE" id="0x21" scope="0x0" name="CDP" id="0x22" scope="0x0" name="MS" id="0x23" scope="0x0" name="SD" id="0x24" scope="0x0" name="EBD" id="0x25" scope="0x0" name="M" id="0x26" scope="0x0"<varnode_sym_head name="SR" id="0x27" scope="0x0"/>
+<varnode_sym_head name="EMR" id="0x28" scope="0x0"/>
+<varnode_sym_head name="MR" id="0x29" scope="0x0"/>
+<varnode_sym_head name="CCR" id="0x2a" scope="0x0"/>
+ name="CP" id="0x2b" scope="0x0" name="RM" id="0x2c" scope="0x0" name="SM" id="0x2d" scope="0x0" name="CE" id="0x2e" scope="0x0" name="SA" id="0x2f" scope="0x0" name="FV" id="0x30" scope="0x0" name="LF" id="0x31" scope="0x0" name="DM" id="0x32" scope="0x0" name="SC" id="0x33" scope="0x0" name="Sca" id="0x34" scope="0x0" name="I" id="0x35" scope="0x0" name="S" id="0x36" scope="0x0" name="L" id="0x37" scope="0x0" name="E" id="0x38" scope="0x0" name="U" id="0x39" scope="0x0" name="N" id="0x3a" scope="0x0" name="Z" id="0x3b" scope="0x0" name="V" id="0x3c" scope="0x0" name="C" id="0x3d" scope="0x0"<varnode_sym_head name="SSH" id="0x3e" scope="0x0"/>
+<varnode_sym_head name="SSL" id="0x3f" scope="0x0"/>
+<varnode_sym_head name="PC" id="0x40" scope="0x0"/>
+<varnode_sym_head name="LC" id="0x41" scope="0x0"/>
+<varnode_sym_head name="LA" id="0x42" scope="0x0"/>
+<varnode_sym_head name="VBA" id="0x43" scope="0x0"/>
+<varnode_sym_head name="SZ" id="0x44" scope="0x0"/>
+<varnode_sym_head name="SP" id="0x45" scope="0x0"/>
+<varnode_sym_head name="R7" id="0x46" scope="0x0"/>
+<varnode_sym_head name="R6" id="0x47" scope="0x0"/>
+<varnode_sym_head name="R5" id="0x48" scope="0x0"/>
+<varnode_sym_head name="R4" id="0x49" scope="0x0"/>
+<varnode_sym_head name="R3" id="0x4a" scope="0x0"/>
+<varnode_sym_head name="R2" id="0x4b" scope="0x0"/>
+<varnode_sym_head name="R1" id="0x4c" scope="0x0"/>
+<varnode_sym_head name="R0" id="0x4d" scope="0x0"/>
+<varnode_sym_head name="EP" id="0x4e" scope="0x0"/>
+<varnode_sym_head name="N7" id="0x4f" scope="0x0"/>
+<varnode_sym_head name="N6" id="0x50" scope="0x0"/>
+<varnode_sym_head name="N5" id="0x51" scope="0x0"/>
+<varnode_sym_head name="N4" id="0x52" scope="0x0"/>
+<varnode_sym_head name="N3" id="0x53" scope="0x0"/>
+<varnode_sym_head name="N2" id="0x54" scope="0x0"/>
+<varnode_sym_head name="N1" id="0x55" scope="0x0"/>
+<varnode_sym_head name="N0" id="0x56" scope="0x0"/>
+<varnode_sym_head name="M7" id="0x57" scope="0x0"/>
+<varnode_sym_head name="M6" id="0x58" scope="0x0"/>
+<varnode_sym_head name="M5" id="0x59" scope="0x0"/>
+<varnode_sym_head name="M4" id="0x5a" scope="0x0"/>
+<varnode_sym_head name="M3" id="0x5b" scope="0x0"/>
+<varnode_sym_head name="M2" id="0x5c" scope="0x0"/>
+<varnode_sym_head name="M1" id="0x5d" scope="0x0"/>
+<varnode_sym_head name="M0" id="0x5e" scope="0x0"/>
+<value_sym_head name="bit_0" id="0x5f" scope="0x0"/>
+<value_sym_head name="bit_0_3" id="0x60" scope="0x0"/>
+<value_sym_head name="bit_1" id="0x61" scope="0x0"/>
+<value_sym_head name="bit_2" id="0x62" scope="0x0"/>
+<value_sym_head name="bit_3" id="0x63" scope="0x0"/>
+<value_sym_head name="bit_4" id="0x64" scope="0x0"/>
+<value_sym_head name="bit_5" id="0x65" scope="0x0"/>
+<value_sym_head name="bit_6" id="0x66" scope="0x0"/>
+<value_sym_head name="bit_7" id="0x67" scope="0x0"/>
+<value_sym_head name="bit_8" id="0x68" scope="0x0"/>
+<value_sym_head name="bit_9" id="0x69" scope="0x0"/>
+<value_sym_head name="bit_10" id="0x6a" scope="0x0"/>
+<value_sym_head name="bit_11" id="0x6b" scope="0x0"/>
+<value_sym_head name="bit_12" id="0x6c" scope="0x0"/>
+<value_sym_head name="bit_13" id="0x6d" scope="0x0"/>
+<value_sym_head name="bit_14" id="0x6e" scope="0x0"/>
+<value_sym_head name="bit_15" id="0x6f" scope="0x0"/>
+<value_sym_head name="bit_16" id="0x70" scope="0x0"/>
+<value_sym_head name="bit_17" id="0x71" scope="0x0"/>
+<value_sym_head name="bit_18" id="0x72" scope="0x0"/>
+<value_sym_head name="bit_19" id="0x73" scope="0x0"/>
+<value_sym_head name="bit_20" id="0x74" scope="0x0"/>
+<value_sym_head name="bit_21" id="0x75" scope="0x0"/>
+<value_sym_head name="bit_22" id="0x76" scope="0x0"/>
+<value_sym_head name="bit_23" id="0x77" scope="0x0"/>
+<value_sym_head name="bit_16_23" id="0x78" scope="0x0"/>
+<varlist_sym_head name="dst" id="0x79" scope="0x0"/>
+<varlist_sym_head name="jjj" id="0x7a" scope="0x0"/>
+<value_sym_head name="byte_0" id="0x7b" scope="0x0"/>
+<value_sym_head name="byte_1" id="0x7c" scope="0x0"/>
+<value_sym_head name="byte_2" id="0x7d" scope="0x0"/>
+<operand_sym_head name="dst" id="0x7e" scope="0x1"/>
+<subtable_sym name="instruction" id="0x0" scope="0x0" numct="4">
+<constructor parent="0x0" first="1" length="3" line="127">
+<oper id="0x7e"/>
+<print piece="abs"/>
+<print piece=" "/>
+<opprint id="0"/>
+<construct_tpl>
+<null/><op_tpl code="FLOAT_ABS"><varnode_tpl><const_tpl type="handle" val="0" s="space"/><const_tpl type="handle" val="0" s="offset"/><const_tpl type="handle" val="0" s="size"/></varnode_tpl>
+<varnode_tpl><const_tpl type="handle" val="0" s="space"/><const_tpl type="handle" val="0" s="offset"/><const_tpl type="handle" val="0" s="size"/></varnode_tpl>
+</op_tpl>
+</construct_tpl>
+</constructor>
+<constructor parent="0x0" first="1" length="3" line="128">
+<print piece="nop"/>
+<construct_tpl>
+<null/></construct_tpl>
+</constructor>
+<constructor parent="0x0" first="1" length="3" line="129">
+<print piece="enddo"/>
+<construct_tpl>
+<null/></construct_tpl>
+</constructor>
+<constructor parent="0x0" first="1" length="3" line="130">
+<print piece="debug"/>
+<construct_tpl>
+<null/></construct_tpl>
+</constructor>
+<decision number="4" context="false" start="5" size="2">
+<decision number="2" context="false" start="14" size="1">
+<decision number="1" context="false" start="0" size="0">
+<pair id="1">
+<instruct_pat>
+<pat_block offset="0" nonzero="3">
+  <mask_word mask="0xffffff00" val="0x200"/>
+</pat_block>
+</instruct_pat>
+</pair>
+</decision>
+<decision number="1" context="false" start="0" size="0">
+<pair id="3">
+<instruct_pat>
+<pat_block offset="0" nonzero="3">
+  <mask_word mask="0xffffff00" val="0x20000"/>
+</pat_block>
+</instruct_pat>
+</pair>
+</decision>
+</decision>
+<decision number="0" context="false" start="0" size="0">
+</decision>
+<decision number="1" context="false" start="0" size="0">
+<pair id="2">
+<instruct_pat>
+<pat_block offset="0" nonzero="3">
+  <mask_word mask="0xffffff00" val="0x4c000000"/>
+</pat_block>
+</instruct_pat>
+</pair>
+</decision>
+<decision number="1" context="false" start="0" size="0">
+<pair id="0">
+<instruct_pat>
+<pat_block offset="0" nonzero="1">
+  <mask_word mask="0x26000000" val="0x26000000"/>
+</pat_block>
+</instruct_pat>
+</pair>
+</decision>
+</decision>
+</subtable_sym>
+<start_sym name="inst_start" id="0x1" scope="0x0"/>
+<end_sym name="inst_next" id="0x2" scope="0x0"/>
+<varnode_sym name="X" id="0x3" scope="0x0" space="register" offset="0x0" size="6">
+</varnode_sym>
+<varnode_sym name="Y" id="0x4" scope="0x0" space="register" offset="0x6" size="6">
+</varnode_sym>
+<varnode_sym name="X1" id="0x5" scope="0x0" space="register" offset="0x0" size="3">
+</varnode_sym>
+<varnode_sym name="X0" id="0x6" scope="0x0" space="register" offset="0x3" size="3">
+</varnode_sym>
+<varnode_sym name="Y1" id="0x7" scope="0x0" space="register" offset="0x6" size="3">
+</varnode_sym>
+<varnode_sym name="Y0" id="0x8" scope="0x0" space="register" offset="0x9" size="3">
+</varnode_sym>
+<varnode_sym name="A" id="0x9" scope="0x0" space="register" offset="0xc" size="7">
+</varnode_sym>
+<varnode_sym name="B" id="0xa" scope="0x0" space="register" offset="0x13" size="7">
+</varnode_sym>
+<varnode_sym name="A2" id="0xb" scope="0x0" space="register" offset="0xc" size="1">
+</varnode_sym>
+<varnode_sym name="B2" id="0xc" scope="0x0" space="register" offset="0x13" size="1">
+</varnode_sym>
+<varnode_sym name="A1" id="0xd" scope="0x0" space="register" offset="0xd" size="3">
+</varnode_sym>
+<varnode_sym name="A0" id="0xe" scope="0x0" space="register" offset="0x10" size="3">
+</varnode_sym>
+<varnode_sym name="B1" id="0xf" scope="0x0" space="register" offset="0x14" size="3">
+</varnode_sym>
+<varnode_sym name="B0" id="0x10" scope="0x0" space="register" offset="0x17" size="3">
+</varnode_sym>
+<varnode_sym name="OMR" id="0x11" scope="0x0" space="register" offset="0x1a" size="3">
+</varnode_sym>
+<varnode_sym name="SCS" id="0x12" scope="0x0" space="register" offset="0x1a" size="1">
+</varnode_sym>
+<varnode_sym name="EOM" id="0x13" scope="0x0" space="register" offset="0x1b" size="1">
+</varnode_sym>
+<varnode_sym name="COM" id="0x14" scope="0x0" space="register" offset="0x1c" size="1">
+</varnode_sym>
+<varnode_sym name="SR" id="0x27" scope="0x0" space="register" offset="0x1d" size="3">
+</varnode_sym>
+<varnode_sym name="EMR" id="0x28" scope="0x0" space="register" offset="0x1d" size="1">
+</varnode_sym>
+<varnode_sym name="MR" id="0x29" scope="0x0" space="register" offset="0x1e" size="1">
+</varnode_sym>
+<varnode_sym name="CCR" id="0x2a" scope="0x0" space="register" offset="0x1f" size="1">
+</varnode_sym>
+<varnode_sym name="SSH" id="0x3e" scope="0x0" space="register" offset="0x20" size="3">
+</varnode_sym>
+<varnode_sym name="SSL" id="0x3f" scope="0x0" space="register" offset="0x23" size="3">
+</varnode_sym>
+<varnode_sym name="PC" id="0x40" scope="0x0" space="register" offset="0x26" size="3">
+</varnode_sym>
+<varnode_sym name="LC" id="0x41" scope="0x0" space="register" offset="0x29" size="3">
+</varnode_sym>
+<varnode_sym name="LA" id="0x42" scope="0x0" space="register" offset="0x2c" size="3">
+</varnode_sym>
+<varnode_sym name="VBA" id="0x43" scope="0x0" space="register" offset="0x2f" size="3">
+</varnode_sym>
+<varnode_sym name="SZ" id="0x44" scope="0x0" space="register" offset="0x32" size="3">
+</varnode_sym>
+<varnode_sym name="SP" id="0x45" scope="0x0" space="register" offset="0x35" size="3">
+</varnode_sym>
+<varnode_sym name="R7" id="0x46" scope="0x0" space="register" offset="0x3b" size="3">
+</varnode_sym>
+<varnode_sym name="R6" id="0x47" scope="0x0" space="register" offset="0x3e" size="3">
+</varnode_sym>
+<varnode_sym name="R5" id="0x48" scope="0x0" space="register" offset="0x41" size="3">
+</varnode_sym>
+<varnode_sym name="R4" id="0x49" scope="0x0" space="register" offset="0x44" size="3">
+</varnode_sym>
+<varnode_sym name="R3" id="0x4a" scope="0x0" space="register" offset="0x47" size="3">
+</varnode_sym>
+<varnode_sym name="R2" id="0x4b" scope="0x0" space="register" offset="0x4a" size="3">
+</varnode_sym>
+<varnode_sym name="R1" id="0x4c" scope="0x0" space="register" offset="0x4d" size="3">
+</varnode_sym>
+<varnode_sym name="R0" id="0x4d" scope="0x0" space="register" offset="0x50" size="3">
+</varnode_sym>
+<varnode_sym name="EP" id="0x4e" scope="0x0" space="register" offset="0x53" size="3">
+</varnode_sym>
+<varnode_sym name="N7" id="0x4f" scope="0x0" space="register" offset="0x56" size="3">
+</varnode_sym>
+<varnode_sym name="N6" id="0x50" scope="0x0" space="register" offset="0x59" size="3">
+</varnode_sym>
+<varnode_sym name="N5" id="0x51" scope="0x0" space="register" offset="0x5c" size="3">
+</varnode_sym>
+<varnode_sym name="N4" id="0x52" scope="0x0" space="register" offset="0x5f" size="3">
+</varnode_sym>
+<varnode_sym name="N3" id="0x53" scope="0x0" space="register" offset="0x62" size="3">
+</varnode_sym>
+<varnode_sym name="N2" id="0x54" scope="0x0" space="register" offset="0x65" size="3">
+</varnode_sym>
+<varnode_sym name="N1" id="0x55" scope="0x0" space="register" offset="0x68" size="3">
+</varnode_sym>
+<varnode_sym name="N0" id="0x56" scope="0x0" space="register" offset="0x6b" size="3">
+</varnode_sym>
+<varnode_sym name="M7" id="0x57" scope="0x0" space="register" offset="0x6e" size="3">
+</varnode_sym>
+<varnode_sym name="M6" id="0x58" scope="0x0" space="register" offset="0x71" size="3">
+</varnode_sym>
+<varnode_sym name="M5" id="0x59" scope="0x0" space="register" offset="0x74" size="3">
+</varnode_sym>
+<varnode_sym name="M4" id="0x5a" scope="0x0" space="register" offset="0x77" size="3">
+</varnode_sym>
+<varnode_sym name="M3" id="0x5b" scope="0x0" space="register" offset="0x7a" size="3">
+</varnode_sym>
+<varnode_sym name="M2" id="0x5c" scope="0x0" space="register" offset="0x7d" size="3">
+</varnode_sym>
+<varnode_sym name="M1" id="0x5d" scope="0x0" space="register" offset="0x80" size="3">
+</varnode_sym>
+<varnode_sym name="M0" id="0x5e" scope="0x0" space="register" offset="0x83" size="3">
+</varnode_sym>
+<value_sym name="bit_0" id="0x5f" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="0" bitend="0" bytestart="0" byteend="0" shift="0"/>
+</value_sym>
+<value_sym name="bit_0_3" id="0x60" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="0" bitend="3" bytestart="0" byteend="0" shift="0"/>
+</value_sym>
+<value_sym name="bit_1" id="0x61" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="1" bitend="1" bytestart="0" byteend="0" shift="1"/>
+</value_sym>
+<value_sym name="bit_2" id="0x62" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="2" bitend="2" bytestart="0" byteend="0" shift="2"/>
+</value_sym>
+<value_sym name="bit_3" id="0x63" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="3" bitend="3" bytestart="0" byteend="0" shift="3"/>
+</value_sym>
+<value_sym name="bit_4" id="0x64" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="4" bitend="4" bytestart="0" byteend="0" shift="4"/>
+</value_sym>
+<value_sym name="bit_5" id="0x65" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="5" bitend="5" bytestart="0" byteend="0" shift="5"/>
+</value_sym>
+<value_sym name="bit_6" id="0x66" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="6" bitend="6" bytestart="0" byteend="0" shift="6"/>
+</value_sym>
+<value_sym name="bit_7" id="0x67" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="7" bitend="7" bytestart="0" byteend="0" shift="7"/>
+</value_sym>
+<value_sym name="bit_8" id="0x68" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="8" bitend="8" bytestart="1" byteend="1" shift="0"/>
+</value_sym>
+<value_sym name="bit_9" id="0x69" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="9" bitend="9" bytestart="1" byteend="1" shift="1"/>
+</value_sym>
+<value_sym name="bit_10" id="0x6a" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="10" bitend="10" bytestart="1" byteend="1" shift="2"/>
+</value_sym>
+<value_sym name="bit_11" id="0x6b" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="11" bitend="11" bytestart="1" byteend="1" shift="3"/>
+</value_sym>
+<value_sym name="bit_12" id="0x6c" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="12" bitend="12" bytestart="1" byteend="1" shift="4"/>
+</value_sym>
+<value_sym name="bit_13" id="0x6d" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="13" bitend="13" bytestart="1" byteend="1" shift="5"/>
+</value_sym>
+<value_sym name="bit_14" id="0x6e" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="14" bitend="14" bytestart="1" byteend="1" shift="6"/>
+</value_sym>
+<value_sym name="bit_15" id="0x6f" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="15" bitend="15" bytestart="1" byteend="1" shift="7"/>
+</value_sym>
+<value_sym name="bit_16" id="0x70" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="16" bitend="16" bytestart="2" byteend="2" shift="0"/>
+</value_sym>
+<value_sym name="bit_17" id="0x71" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="17" bitend="17" bytestart="2" byteend="2" shift="1"/>
+</value_sym>
+<value_sym name="bit_18" id="0x72" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="18" bitend="18" bytestart="2" byteend="2" shift="2"/>
+</value_sym>
+<value_sym name="bit_19" id="0x73" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="19" bitend="19" bytestart="2" byteend="2" shift="3"/>
+</value_sym>
+<value_sym name="bit_20" id="0x74" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="20" bitend="20" bytestart="2" byteend="2" shift="4"/>
+</value_sym>
+<value_sym name="bit_21" id="0x75" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="21" bitend="21" bytestart="2" byteend="2" shift="5"/>
+</value_sym>
+<value_sym name="bit_22" id="0x76" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="22" bitend="22" bytestart="2" byteend="2" shift="6"/>
+</value_sym>
+<value_sym name="bit_23" id="0x77" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="23" bitend="23" bytestart="2" byteend="2" shift="7"/>
+</value_sym>
+<value_sym name="bit_16_23" id="0x78" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="16" bitend="23" bytestart="2" byteend="2" shift="0"/>
+</value_sym>
+<varlist_sym name="dst" id="0x79" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="3" bitend="3" bytestart="0" byteend="0" shift="3"/>
+<var id="0x9"/>
+<var id="0xa"/>
+</varlist_sym>
+<varlist_sym name="jjj" id="0x7a" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="4" bitend="6" bytestart="0" byteend="0" shift="4"/>
+<null/>
+<null/>
+<null/>
+<null/>
+<var id="0x6"/>
+<var id="0x8"/>
+<var id="0x5"/>
+<var id="0x7"/>
+</varlist_sym>
+<value_sym name="byte_0" id="0x7b" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="0" bitend="7" bytestart="0" byteend="0" shift="0"/>
+</value_sym>
+<value_sym name="byte_1" id="0x7c" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="8" bitend="15" bytestart="1" byteend="1" shift="0"/>
+</value_sym>
+<value_sym name="byte_2" id="0x7d" scope="0x0">
+<tokenfield bigendian="false" signbit="false" bitstart="16" bitend="23" bytestart="2" byteend="2" shift="0"/>
+</value_sym>
+<operand_sym name="dst" id="0x7e" scope="0x1" subsym="0x79" off="0" base="-1" minlen="3" index="0">
+<operand_exp index="0" table="0x0" ct="0x0"/>
+</operand_sym>
+</symbol_table>
+</sleigh>
