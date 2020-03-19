@@ -1,0 +1,159 @@
+# sleigh specification file for DSP563XX Processor
+
+define endian=little;
+define alignment=1; # don't know what alignment=1 means but I think it's required
+
+#############   It makes sense for p to be ROM but not sure?
+#   Spaces  #   Also, no clue what default means but it's required
+#############
+define	space	p			type=ram_space			size=3 default;
+define	space	x			type=ram_space			size=3;
+define	space	y			type=ram_space			size=3;
+define	space	register	type=register_space		size=3;
+
+
+
+#################
+#   Registers   #
+#################
+
+# Data ALU Input Registers
+	define register offset=0 size=6 [X Y];
+	define register offset=0 size=3 [X1 X0 Y1 Y0];
+
+# Data ALU Accumulator Registers
+	define register offset=12 size=7 [A B];
+	define register offset=12 size=1 [A2 _ _ _ _ _ _ B2 _ _ _ _ _ _];
+	define register offset=13 size=3 [A1 A0];
+	define register offset=20 size=3 [B1 B0];
+
+# PCU Registers
+	define register offset=26 size=3 [OMR];
+	define register offset=26 size=1 [SCS EOM COM];
+	define bitrange 
+	PEN	=	OMR[23, 1]
+	MSW	=	OMR[21, 2]
+	SEN	=	OMR[20, 1]
+	WRP	=	OMR[19, 1]
+	EOV	=	OMR[18, 1]
+	EUN	=	OMR[17, 1]
+	XYS	=	OMR[16, 1]
+	ATE	=	OMR[15, 1]
+	APD	=	OMR[14, 1]
+	ABE	=	OMR[13, 1]
+	BRT	=	OMR[12, 1]
+	TAS	=	OMR[11, 1]
+	BE	=	OMR[10, 1]
+	CDP	=	OMR[8, 2]
+	MS	=	OMR[7, 1]
+	SD	=	OMR[6, 1]
+	EBD	=	OMR[4, 1]
+	M	=	OMR[0, 3];
+
+	define register offset=29 size=3 [SR];
+
+	define register offset=29 size=1 [EMR MR CCR];
+	
+
+	define bitrange
+	CP	=	SR[22, 2]
+	RM	=	SR[21, 1]
+	SM	=	SR[20, 1]
+	CE	=	SR[19, 1]
+	SA	=	SR[17, 1]
+	FV	=	SR[16, 1]
+	LF	=	SR[15, 1]
+	DM	=	SR[14, 1]
+	SC	=	SR[13, 1]
+	Sca	=	SR[10, 2]
+	I	=	SR[8, 2]    #spec only uses one letter for these flags, should we use real name for clarity?
+	S	=	SR[7, 1]
+	L	=	SR[6, 1]
+	E	=	SR[5, 1]
+	U	=	SR[4, 1]
+	N	=	SR[3, 1]
+	Z	=	SR[2, 1]
+	V	=	SR[1, 1]
+	C	=	SR[0, 1];
+
+
+define register offset=32 size=3 [SSH SSL PC LC LA VBA SZ SP];
+
+# AGU Registers
+	# Address Registers
+		define register offset=59  size=3 [R7 R6 R5 R4 R3 R2 R1 R0 EP];
+	# Offset Registers
+		define register offset=86  size=3 [N7 N6 N5 N4 N3 N2 N1 N0];
+	# Modifier Registers
+		define register offset=110 size=3 [M7 M6 M5 M4 M3 M2 M1 M0];
+
+
+define token inst_24(24)
+	bit_0	= (0, 0)
+	bit_0_3 = (0, 3)
+	bit_1	= (1, 1)
+	bit_2	= (2, 2)
+	bit_3	= (3, 3)
+	bit_4	= (4, 4)
+	bit_5	= (5, 5)
+	bit_6	= (6, 6)
+	bit_7	= (7, 7)
+	bit_8	= (8, 8)
+	bit_9	= (9, 9)
+	bit_10	= (10, 10)
+	bit_11	= (11, 11)
+	bit_12	= (12, 12)
+	bit_13	= (13, 13)
+	bit_14	= (14, 14)
+	bit_15	= (15, 15)
+	bit_16	= (16, 16)
+	bit_17	= (17, 17)
+	bit_18	= (18, 18)
+	bit_19	= (19, 19)
+	bit_20	= (20, 20)
+	bit_21	= (21, 21)
+	bit_22	= (22, 22)
+	bit_23	= (23, 23)
+	bit_16_23=(16, 23)
+	dst		= (3, 3)
+	jjj		= (4, 6)
+	byte_0	= (0, 7)
+	byte_1	= (8, 15)
+	byte_2	= (16, 23);
+	
+attach variables [dst] [A B];
+
+#            Condition Codes
+#            7 6 5 4 3 2 1 0
+#            S L E U N Z V C
+#            C C C C C C C U
+#
+#            C=Changed U=Unchanged
+#
+#            23       16 15      8 7 6 6 4 3 2 1 0
+#  ABS D     [Data Bus Move Field] 0 0 1 0 d 1 1 0
+#            Optional Effective Address Extension
+#
+#     d = Destination accumulator [A,B] (See page 12-18)
+#     Take the absolute value of the destination operand D and store the result in the destination accumulator.
+
+:abs dst is (bit_1=1 & bit_2=1 & bit_5=1) & dst { dst = abs(dst);}
+
+
+
+
+
+#            Condition Codes
+#            7 6 5 4 3 2 1 0
+#            S L E U N Z V C
+#            U U U U U U U U
+#
+#            C=Changed U=Unchanged
+#
+#            23       16 15      8 7 6 6 4 3 2 1 0
+#  ABS D     0 0  0   0   0 0 0 0 0 0 0 0 0 0 0 0 0
+#
+#     d = Destination accumulator [A,B] (See page 12-18)
+#     
+:nop is byte_0=0 & byte_1=0 & byte_2=2 {}
+
