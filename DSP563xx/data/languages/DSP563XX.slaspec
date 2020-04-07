@@ -1,154 +1,652 @@
-# sleigh specification file for DSP563XX Processor
-
+# sleigh specification file for DSP563XX Processor 
+ 
 define endian=little;
 define alignment=1;
-
+ 
 #############
-#	Spaces	#
+#    Spaces    #
 #############
-define	space	p			type=ram_space			size=3 default;
-define	space	x			type=ram_space			size=3;
-define	space	y			type=ram_space			size=3;
-define	space	register	type=register_space		size=3;
-
-
+define    space    p            type=ram_space            size=3 default;
+define    space    x            type=ram_space            size=3;
+define    space    y            type=ram_space            size=3;
+define    space    register    type=register_space        size=3;
+ 
 
 #################
-#	Registers	#
+#    Registers    #
 #################
-
-# Data ALU Input Registers
-	define register offset=0 size=6 [X Y];
-	define register offset=0 size=3 [X1 X0 Y1 Y0];
-
-# Data ALU Accumulator Registers
-	define register offset=12 size=7 [A B];
-	define register offset=12 size=1 [A2 _ _ _ _ _ _ B2 _ _ _ _ _ _];
-	define register offset=13 size=3 [A1 A0];
-	define register offset=20 size=3 [B1 B0];
-
+ 
+# Data ALU Input Registers 
+    define register offset=0 size=6 [X Y]; 
+    define register offset=0 size=3 [X1 X0 Y1 Y0]; 
+ 
+# Data ALU Accumulator Registers 
+    define register offset=12 size=7 [A B];
+    define register offset=12 size=1 [A2 _ _ _ _ _ _ B2 _ _ _ _ _ _];
+    define register offset=13 size=3 [A1 A0];
+    define register offset=20 size=3 [B1 B0];
+ 
 # PCU Registers
-	define register offset=26 size=3 [OMR];
-	define register offset=26 size=1 [SCS EOM COM];
-	define bitrange 
-	PEN	=	OMR[23, 1]
-	MSW	=	OMR[21, 2]
-	SEN	=	OMR[20, 1]
-	WRP	=	OMR[19, 1]
-	EOV	=	OMR[18, 1]
-	EUN	=	OMR[17, 1]
-	XYS	=	OMR[16, 1]
-	ATE	=	OMR[15, 1]
-	APD	=	OMR[14, 1]
-	ABE	=	OMR[13, 1]
-	BRT	=	OMR[12, 1]
-	TAS	=	OMR[11, 1]
-	BE	=	OMR[10, 1]
-	CDP	=	OMR[8, 2]
-	MS	=	OMR[7, 1]
-	SD	=	OMR[6, 1]
-	EBD	=	OMR[4, 1]
-	M	=	OMR[0, 3];
-
-	define register offset=29 size=3 [SR];
-	define register offset=29 size=1 [EMR MR CCR];
-	define bitrange
-	CP	=	SR[22, 2]
-	RM	=	SR[21, 1]
-	SM	=	SR[20, 1]
-	CE	=	SR[19, 1]
-	SA	=	SR[17, 1]
-	FV	=	SR[16, 1]
-	LF	=	SR[15, 1]
-	DM	=	SR[14, 1]
-	SC	=	SR[13, 1]
-	Sca	=	SR[10, 2]
-	I	=	SR[8, 2]
-	S	=	SR[7, 1]
-	L	=	SR[6, 1]
-	E	=	SR[5, 1]
-	U	=	SR[4, 1]
-	N	=	SR[3, 1]
-	Z	=	SR[2, 1]
-	V	=	SR[1, 1]
-	C	=	SR[0, 1];
-
-
-define register offset=32 size=3 [SSH SSL PC LC LA VBA SZ SP];
-
+    define register offset=26 size=3 [OMR];
+    define register offset=26 size=1 [SCS EOM COM];
+@define PEN    "OMR[23, 1]" 
+@define MSW    "OMR[21, 2]" 
+@define SEN    "OMR[20, 1]" 
+@define WRP    "OMR[19, 1]" 
+@define EOV    "OMR[18, 1]" 
+@define EUN    "OMR[17, 1]" 
+@define XYS    "OMR[16, 1]" 
+@define ATE    "OMR[15, 1]" 
+@define APD    "OMR[14, 1]" 
+@define ABE    "OMR[13, 1]" 
+@define BRT    "OMR[12, 1]" 
+@define TAS    "OMR[11, 1]" 
+@define BE    "OMR[10, 1]" 
+@define CDP    "OMR[8, 2]"
+@define MS    "OMR[7, 1]"
+@define SD    "OMR[6, 1]"
+@define EBD    "OMR[4, 1]"
+@define M    "OMR[0, 3]"
+ 
+    define register offset=29 size=3 [SR]; 
+    define register offset=29 size=1 [EMR MR CCR]; 
+     
+@define CorePriority "SR[22, 2]" 
+@define RoundingMode "SR[21, 1]" 
+@define SaturationMode "SR[20, 1]" 
+@define CacheEnable "SR[19, 1]"
+@define SixteenArithmaticMode "SR[17, 1]"
+@define DoForeverFlag "SR[16, 1]"
+@define DoLoopFlag "SR[15, 1]" 
+@define DoubleMultiplyMode "SR[14, 1]" 
+@define SixteenCompatMode "SR[13, 1]"
+@define ScalingMode "SR[10, 2]"
+@define InterruptMask "SR[8, 2]" 
+@define ScalingFlag "SR[7, 1]" 
+@define LimitFlag "SR[6, 1]" 
+@define ExtensionFlag "SR[5, 1]" 
+@define UnnormalizedFlag "SR[4, 1]"
+@define NegativeFlag "SR[3, 1]"
+@define ZeroFlag "SR[2, 1]"
+@define OverflowFlag "SR[1, 1]"
+@define CarryFlag "SR[0, 1]" 
+ 
+ 
+define register offset=32 size=3 [SSH SSL PC LC LA VBA SZ SP]; 
+ 
 # AGU Registers
-	# Address Registers
-		define register offset=59  size=3 [R7 R6 R5 R4 R3 R2 R1 R0 EP];
-	# Offset Registers
-		define register offset=86  size=3 [N7 N6 N5 N4 N3 N2 N1 N0];
-	# Modifier Registers
-		define register offset=110 size=3 [M7 M6 M5 M4 M3 M2 M1 M0];
+    # Address Registers
+        define register offset=59 size=3 [R7 R6 R5 R4 R3 R2 R1 R0 EP];
+    # Offset Registers 
+        define register offset=86 size=3 [N7 N6 N5 N4 N3 N2 N1 N0]; 
+    # Modifier Registers 
+        define register offset=110 size=3 [M7 M6 M5 M4 M3 M2 M1 M0]; 
+define register offset=134 size=3 [SC];
+define register offset=0x1000 size=1 [dst_reg]; #this is a fake register just to hold the dst register
 
-# sleigh include file for DSP563XX language instructions
 
-define token inst_24(24)
-	bit_0	= (0, 0)
-	bit_0_3 = (0, 3)
-	bit_1	= (1, 1)
-	bit_2	= (2, 2)
-	bit_3	= (3, 3)
-	bit_4	= (4, 4)
-	bit_5	= (5, 5)
-	bit_6	= (6, 6)
-	bit_7	= (7, 7)
-	bit_8	= (8, 8)
-	bit_9	= (9, 9)
-	bit_10	= (10, 10)
-	bit_11	= (11, 11)
-	bit_12	= (12, 12)
-	bit_13	= (13, 13)
-	bit_14	= (14, 14)
-	bit_15	= (15, 15)
-	bit_16	= (16, 16)
-	bit_17	= (17, 17)
-	bit_18	= (18, 18)
-	bit_19	= (19, 19)
-	bit_20	= (20, 20)
-	bit_21	= (21, 21)
-	bit_22	= (22, 22)
-	bit_23	= (23, 23)
-	bit_16_23=(16, 23)
-	dst		= (3, 3)
-	jjj		= (4, 6)
-	byte_0	= (0, 7)
-	byte_1	= (8, 15)
-	byte_2	= (16, 23);
+
+define token inst_24(24) 
+    bit_0    = (0, 0) 
+    bit_0_3 = (0, 3) 
+    bit_1    = (1, 1) 
+    bit_2    = (2, 2) 
+    bit_3    = (3, 3) 
+    bit_4    = (4, 4) 
+    bit_5    = (5, 5) 
+    bit_6    = (6, 6) 
+    bit_7    = (7, 7) 
+    bit_8    = (8, 8) 
+    bit_9    = (9, 9) 
+    bit_10    = (10, 10) 
+    bit_11    = (11, 11) 
+    bit_12    = (12, 12) 
+    bit_13    = (13, 13) 
+    bit_14    = (14, 14) 
+    bit_15    = (15, 15) 
+    bit_16    = (16, 16) 
+    bit_17    = (17, 17) 
+    bit_18    = (18, 18) 
+    bit_19    = (19, 19) 
+    bit_20    = (20, 20) 
+    bit_21    = (21, 21) 
+    bit_22    = (22, 22) 
+    bit_23    = (23, 23)
+    op       = (0, 23)
+    bit_16_23=(16, 23) 
+    dst_3    = (3, 3) 
+    dst_0 = (0, 0) 
+    byte_0    = (0, 7) 
+    byte_1    = (8, 15)
+    byte_2    = (16, 23) 
+    byte_1_2 = (8, 23) 
+    bits_4_7 = (4, 7) 
+    bits_0_2 = (0, 2) 
+    bits_0_7	= (0, 7)
+    dddddd	= (0, 5)
+    bits_8_23	= (8, 23)
+    bits_20_23	= (20, 23)
+    bits_20_21	= (20, 21)
+    bits_21_23	= (21, 23)
+    bits_22_23	= (22, 23)
+    bits_16_20	= (16, 20)
+    bits_16_18 = (16, 18)
+    bits_16_18_00 = (16, 18)
+	bits_16_18_01 = (16, 18)
+	bits_16_18_10 = (16, 18)
+    bits_16_18_11 = (16, 18)
+    j = (4, 4)
+    bits_0_3 = (0, 3)
+    bits_18_23 = (18, 23)
+    bits_8_12 = (8, 12)
+    bits_13_17 =(13, 17)
+    bits_8_10 = (8, 10)
+    bits_5_7 = (5, 7)
+    bits_2_5 = (2, 5)
+    bits_8_10r = (8, 10)
+    bits_8_13 = (8, 13)
+    bits_8_10n = (8, 10)
+    bits_11_13 = (11, 13)
+    bits_11_23 = (11, 23)
+    bits_13_15 = (13, 15)
+    mmm = (11, 13)
+    jjj_a = (4, 6)
+    jjj_b = (4, 6)
+    bits_17_23 = (17, 23)
+    bits_1_7 = (1,7); 
+
+define token addr_ext(24)
+	ext = (0, 15);
+
+
+attach variables [dst_3 dst_0] [A B];
+attach variables [jjj_a] [A1 _ _ _ X0 Y0 X1 Y1];
+attach variables [jjj_b] [B1 _ _ _ X0 Y0 X1 Y1];
+attach variables [bits_16_20 bits_8_12 bits_13_17] 
+[
+	_  _  _  _
+	X0 X1 Y0 Y1 A0 B0 _  _ # null values in place of A2 B2 which are only 8-bit
+	A1 B1 A1 B1 # second A1 B1 are taking place of A B
+	R0 R1 R2 R3 R4 R5 R6 R7 
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+attach variables [dddddd] 
+[
+	_  _  _  _
+	X0 X1 Y0 Y1 A0 B0 _  _ # null values in place of A2 B2 which are only 8-bit
+	A1 B1 A1 B1 # second A1 B1 are taking place of A B
+	R0 R1 R2 R3 R4 R5 R6 R7 
+	N0 N1 N2 N3 N4 N5 N6 N7
+	M0 M1 M2 M3 M4 M5 M6 M7
+	_  _  EP _  _  _  _  _
+	VBA SC _ _  _  _  _  _
+	SZ SR OMR SP SSH SSL LA LC 
+];
+
+attach variables [j] [X Y];
+attach variables [bits_16_18_00] 
+[
+	_  _  _  _
+	X0 X1 Y0 Y1 
+];
+
+attach variables [bits_16_18_01]
+[
+	A0 B0 _ _ A1 B1 A1 B1
+];
+
+attach variables [bits_16_18_10]
+[
+	R0 R1 R2 R3 R4 R5 R6 R7
+];
+
+attach variables [bits_16_18_11]
+[
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+attach variables [bits_8_10r] 
+[
+	R0 R1 R2 R3 R4 R5 R6 R7
+];
+attach variables [bits_8_10n]
+[
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+attach variables [bits_0_3]
+[
+	R0 R1 R2 R3 R4 R5 R6 R7
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+#################
+#	Macro		#
+#################
+
+macro zeroflags(op) 
+{
+  $(ZeroFlag) = (op == 0);
+}
+
+
+# Defines
+
+sourcereg: reloc is op [reloc = (op & 0x3F00) >> 8;] { export *:1 reloc; }
+
+#dddd: dd is op [dd = ( (op >> 16) & 0x7) | (( (op >> 16) & 0x30) >> 1); ] { export *:1 dd; }
+ddddd: bits_16_18_00 is bits_20_21=0b00 & bits_16_18_00 {export bits_16_18_00;}
+ddddd: bits_16_18_01 is bits_20_21=0b01 & bits_16_18_01 {export bits_16_18_01;}
+ddddd: bits_16_18_10 is bits_20_21=0b10 & bits_16_18_10 {export bits_16_18_10;}
+ddddd: bits_16_18_11 is bits_20_21=0b11 & bits_16_18_11 {export bits_16_18_11;}
+aaaaaa: addr is bits_8_13 [addr  = (bits_8_13 >> 8) & 0b111111;] {export *:3 addr;}
+aaaaaaa: displacement is op [ displacement = ((op >> 6) & 0b1) | ((op >> 10) & 0b111111);] {export *[const]:1 displacement;}
+jjj: jjj_a is bit_3=1 & jjj_a {export jjj_a;}
+jjj: jjj_b is bit_3=0 & jjj_b {export jjj_b;}
+ggg: src_reg is op [src_reg = (op >> 1) & 0x7;] {export *:1 src_reg;} 
+
+iiiiiiii: tmp is op [tmp = (op >> 8) & 0b11111111;] {export *[const]:3 tmp;}
+
+
+
+
+##################
+#  Instructions  #
+##################
+
+
+#######################
+# Parallel Instructions
+#######################
+# Bits 23..20 = [xxxx] -> (where one or more x bit is set)
+
+# All Move instructions: Bits [7..0] == 0
+
+# Parallel move NOP
+:nop is (bits_0_7=0x0 & bits_8_23=0x2000)
+{
+}
+
+# Keeping for reference but implementing differently below
+## Parallel move X: -> Y:
+#:move_x_to_y is (bits_0_7=0x0 & bits_20_23!=0x0 & bit_23=0x1)
+#{
+#}
+#
+## Parallel move X: or Y: ->
+#:move_x_or_y sourcereg dddd is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_22_23=0x1 & bits_20_21!=0x0) &
+#                                sourcereg & dddd
+#{
+#    # dddd Decode ALU register
+#}
+
+# Parallel move L: ->
+:move_l is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_20_23=0x4)
+{
+}
+
+# Parallel move I:, R:, U: ->
+#:move_iru is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_21_23=0x1)
+#{
+#}
+
+:move_imm "#"iiiiiiii, bits_16_20  is (bits_21_23=0b001 & bits_0_7=0x0) & iiiiiiii  & bits_16_20
+{
+	bits_16_20 = 0x0;
+	bits_16_20 = iiiiiiii;
+}
+
+:move_r bits_13_17, bits_8_12 is (bits_18_23=0b001000 & bits_0_7=0x0) & bits_8_12 & bits_13_17
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	bits_13_17 = bits_8_12;
+}
+
+:u "("bits_8_10r")-"bits_8_10n is (bits_0_7=0x0 & byte_2=0x20 & bits_13_15=0b010) & mmm=0 & bits_8_10r & bits_8_10n
+{
+	bits_8_10r = bits_8_10r - bits_8_10n;
+}
+
+:u "("bits_8_10r")+"bits_8_10n is (bits_0_7=0x0 & byte_2=0x20 & bits_13_15=0b010) & mmm=1 & bits_8_10r & bits_8_10n
+{
+	bits_8_10r = bits_8_10r + bits_8_10n;
+}
+
+:u "("bits_8_10r")-"is (bits_0_7=0x0 & byte_2=0x20 & bits_13_15=0b010) & mmm=2 & bits_8_10r
+{
+	bits_8_10r = bits_8_10r - 1;
+}
+
+:u "("bits_8_10r")+" is (bits_0_7=0x0 & byte_2=0x20 & bits_13_15=0b010) & mmm=3 & bits_8_10r
+{
+	bits_8_10r = bits_8_10r + 1;
+}
+
+:move_y ddddd",Y:("bits_8_10r"-"bits_8_10n")" is mmm=0 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r & bits_8_10n
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+
+}
+
+:move_y ddddd",Y:("bits_8_10r")+"bits_8_10n is mmm=1 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r & bits_8_10n
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
 	
-attach variables [dst] [A B];
-attach variables [jjj] [_ _ _ _ X0 Y0 X1 Y1];
+}
+
+:move_y ddddd",Y:("bits_8_10r")-" is mmm=2 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r & bits_8_10n
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
+
+:move_y ddddd",Y:("bits_8_10r")+" is mmm=3 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r & bits_8_10n
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
 
+:move_y  ddddd",Y:("bits_8_10r")" is mmm=4 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
-:abs dst is (bit_1=1 & bit_2=1 & bit_5=1) & dst { dst = abs(dst);}
-:nop is byte_0=0 & byte_1=0 & byte_2=2 {}
-:enddo is byte_0=0x4C & byte_1=0 & byte_2=0 {}
-:debug is byte_0=0 & byte_1=0x2 & byte_2=0 {}
+:move_y ddddd",Y:("bits_8_10r"+"bits_8_10n")" is mmm=5 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r & bits_8_10n
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y ddddd",Y:-("bits_8_10r")"  is mmm=7 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y "Y:("bits_8_10r")," ddddd is mmm=6 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10r; ext
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y "#"ext"," ddddd is mmm=6 & bits_0_7=0x0 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10=0b100; ext
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y "Y:"aaaaaa"," ddddd is bits_22_23=1 & bit_14=0 & ddddd & bit_19=1 & aaaaaa & bits_0_7=0
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y "Y:("bits_8_10r + ext")," dddddd is bits_11_23=0b0000101101110 & bits_8_10r & bit_7=1 & dddddd; ext
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+:move_y "Y:("bits_8_10r + aaaaaaa")," bits_0_3 is bits_17_23=1 & bit_7=1 & bit_5=1  & bits_8_10r & bits_0_3 & aaaaaaa
+#TODO:
+# Set Scaling Flag and Limit Flag
+{
+	
+}
 
+###########################
+# Non-Parallel Instructions
+###########################
+# Bits 23..20 = [0000]
+#
+#:move is (op=0x85E00 & bits_20_23=0x0)
+#{
+#}
+#
+# 
+# 
+#:move is (op=0x685E00) 
+#{
+#	
+#}
 
+:cmp jjj","dst_3 is bits_0_2=0b101 & bit_7=0 & dst_3 & jjj
+{
+	
+}
 
+:pflushun is op=0x1
+{
+	
+}
 
+:pfree is op=0x2
+{
+	
+}
 
+:plockr is op=0xF
+{
+	
+}
 
+:trap is op=0x6
+{
+	
+}
 
+:trapcc is  byte_2=0 & byte_1=0 & bits_4_7=1
+{
+	
+}
 
+:adc j","dst_3 is bits_5_7=1 & bits_0_2=1 & dst_3 & j
+{
+	
+}
+:tst dst_3 is bits_4_7=0 & bits_0_2=3 & dst_3 & byte_1=0 & byte_2=0
+{
+	
+}
 
+####################################################
+#No Operation NOP 
+#Instruction Fields None
+#Description Increment the Program Counter (PC). Pending pipeline actions, if any, are
+#completed. Execution continues with the instruction following the NOP. 
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax 
+#PC + 1 -> PC NOP
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- - - - - - - -
+#CCR
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#NOP 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+:nop is (op=0x0)
+{ 
+    
+} 
+####################################################
+ 
+ 
+####################################################
+#Absolute Value
+#Operation Assembler Syntax
+#| D | -> D (parallel move) ABS D (parallel move) 
+#{D} d Destination accumulator [A,B] (see Table 12-13 on page 12-18) 
+#7 6 5 4 3 2 1 0 
+#S L E U N Z V C 
+#c c c c c c c - 
+#CCR 
+#c Changed according to the standard definition. 
+#- Unchanged by the instruction. 
+#2316 15 8 7 0 
+#ABS D Data Bus Move Field 0 0 1 0 d 1 1 0 
+ 
+:abs dst_3 is (bits_4_7=0x2 & bits_0_2=0x6) & dst_3
+{
+    dst_3 = abs(dst_3);
+}
+####################################################
 
+####################################################
+#Return From Subroutine RTS 
+#Instruction Fields None
+#Description Pull the Program Counter (PC) from the system stack. The previous PC value is
+#The Status Register (SR) is not affected.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax 
+#SSH -> PC; SP – 1 -> SP RTS
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- - - - - - - -
+#CCR
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#RTS 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0
+:rts is (op=0xC)
+{ 
+    PC = SSH; SP = SP -1; 
+} 
+####################################################
 
+####################################################
+#Decrement by One DEC
+#Instruction Fields
+#Description Decrement by one the specified operand and store the result in the destination
+#accumulator. One is subtracted from the LSB of D.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax
+#D – 1 -> D DEC D
+#{D} d Destination accumulator [A,B] (see Table 12-13 on page 12-18)
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- c c c c c c c
+#CCR
+#c Changed according to the standard definition.
+#- Unchanged by the instruction.
+#23 16 158 7 0 
+#DEC D 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 d
+:dec dst_0 is byte_1_2=0 & bits_1_7=5 & dst_0 
+{ 
+    dst_0 = dst_0 - 1;
+}
 
+####################################################
+#Increment by One INC
+#Instruction Fields
+#Description Increment by one the specified operand and store the result in the destination
+#accumulator. One is added from the LSB of D.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax
+#D + 1 -> D INC D
+#{D} d Destination accumulator [A,B] (see Table 12-13 on page 12-18)
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- c c c c c c c
+#CCR
+#c Changed according to the standard definition.
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#INC D 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 d 
+:inc dst_0 is byte_1_2=0 & bits_1_7=4 & dst_0 
+{ 
+    dst_0 = dst_0 + 1;
+}
+#####################################################
 
+#####################################################
+#Reset On-Chip Peripheral Devices RESET
+#Instruction Fields None
+#Description Reset the interrupt priority register and all on-chip peripherals. This is a software
+#reset, which is not equivalent to a hardware RESET since only on-chip peripherals and the
+#interrupt structure are affected. The processor state is not affected, and execution continues with
+#the next instruction. All interrupt sources are disabled except for the stack error, NMI, illegal
+#instruction, Trap, Debug request, and hardware reset interrupts.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax
+#Reset the interrupt priority register and all
+#on-chip peripherals
+#RESET
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- - - - - - - -
+#CCR
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#RESET 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 
+:reset is (op=0x84) 
+{
+    
+} 
+#####################################################
 
+#####################################################
+#End Current DO Loop ENDDO
+#Instruction Fields None
+#Description Terminate the current hardware DO loop before the current Loop Counter (LC)
+#equals one. If the value of the current DO LC is needed, it must be read before the execution of
+#the ENDDO instruction. Initially, the Loop Flag (LF) is restored from the system stack and the
+#remaining portion of the Status Register (SR) and the Program Counter (PC) are purged from the
+#system stack. The Loop Address (LA) and the LC registers are then restored from the system
+#stack.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax
+#SSL(LF) -> SR;SP – 1 -> SP ENDDO
+#SSH -> LA; SSL -> LC;SP – 1 -> SP
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- - - - - - - -
+#CCR
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#ENDDO 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0
+:enddo is (op=0x4C) 
+{
+    
+} 
+#######################################################
 
-
-
-
+#######################################################
+#DEBUG Enter Debug Mode DEBUG
+#Instruction Fields None
+#Description Enter the Debug mode and wait for OnCE commands.
+#Condition Codes
+#Instruction Formats and Opcodes
+#Operation Assembler Syntax
+#Enter the Debug mode DEBUG
+#7 6 5 4 3 2 1 0
+#S L E U N Z V C
+#- - - - - - - -
+#CCR
+#- Unchanged by the instruction.
+#23 16 158 7 0
+#DEBUG 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
+:debug is (op=0x200) 
+{
+    
+} 
+#######################################################

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- See Relax specification: Ghidra/Framework/SoftwareModeling/data/languages/language_definitions.rxg -->
-
 <language_definitions>
-<!-- Uncomment the following to make the language available in Ghidra -->
-
-   <language processor="DSP563XX"
+  
+  <language processor="DSP563xx"
             endian="little"
             size="24"
             variant="default"
             version="1.0"
-            slafile="DSP563XX.sla"
-            processorspec="DSP563XX.pspec"
-            id="skel:LE:24:default">
-    <description>Skeleton Language Module</description>
-    <compiler name="default" spec="DSP563XX.cspec" id="default"/>
-  </language> 
-
+            slafile="DSP563xx.sla"
+            processorspec="DSP563xx.pspec"
+            manualindexfile="../manuals/DSP563xx.idx"
+            id="56311:LE:24:default">
+    <description>Motorola DSP56311</description>
+    <compiler name="default" spec="DSP563xx.cspec" id="default"/>
+  </language>  
+  
 </language_definitions>

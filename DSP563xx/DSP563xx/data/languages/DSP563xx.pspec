@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<processor_spec>
+  <programcounter register="PC"/>
+  
+  <default_symbols>
+    <symbol name="PORTA" address="0"/>
+  </default_symbols>
+
+  <!--
+      <default_memory_blocks>
+        <memory_block name="X_RAM" start_address="0x0" length="0x20000" initialized="true"/>
+        <memory_block name="Y_RAM" start_address="0x0" length="0x20000" initialized="true"/>    
+      </default_memory_blocks>
+  -->
+  
+</processor_spec>

@@ -1,0 +1,137 @@
+# sleigh specification file for DSP563XX processor
+
+define endian=little;
+define alignment=1;
+
+#############
+#	Spaces	#
+#############
+define  space   p           type=ram_space          size=3 default;
+define  space   x           type=ram_space          size=3;
+define  space   y           type=ram_space          size=3;
+define  space   register    type=register_space     size=3;
+
+#################
+#	Registers	#
+#################
+
+#################
+#	Registers	#
+#################
+
+# Data ALU Input Registers
+    define register offset=0 size=6 [X Y];
+    define register offset=0 size=3 [X1 X0 Y1 Y0];
+
+# Data ALU Accumulator Registers
+    define register offset=12 size=7 [A B];
+    define register offset=12 size=1 [A2 _ _ _ _ _ _ B2 _ _ _ _ _ _];
+    define register offset=13 size=3 [A1 A0];
+    define register offset=20 size=3 [B1 B0];
+
+# General Purpose Registers
+    define register offset=26 size=3 [R0 R1 R2 R3 R4 R5 R6];
+
+# Program Control Unit
+    define register offset=30 size=3 [PC LA LC VBA];
+
+    
+define token inst_24(24)
+    bit_0	= (0, 0)
+    bit_1	= (1, 1)
+    bit_2	= (2, 2)
+    bit_3	= (3, 3)
+    bit_4	= (4, 4)
+    bit_5	= (5, 5)
+    bit_6	= (6, 6)
+    bit_7	= (7, 7)
+    bit_8	= (8, 8)
+    bit_9	= (9, 9)
+    bit_10	= (10, 10)
+    bit_11	= (11, 11)
+    bit_12	= (12, 12)
+    bit_13	= (13, 13)
+    bit_14	= (14, 14)
+    bit_15	= (15, 15)
+    bit_16	= (16, 16)
+    bit_17	= (17, 17)
+    bit_18	= (18, 18)
+    bit_19	= (19, 19)
+    bit_20	= (20, 20)
+    bit_21	= (21, 21)
+    bit_22	= (22, 22)
+    bit_23	= (23, 23)
+
+    bits_0_7	= (0, 7)
+    bits_8_23	= (8, 23)
+    bits_20_23	= (20, 23)
+    bits_20_21	= (20, 21)
+    bits_21_23	= (21, 23)
+    bits_22_23	= (22, 23)
+    
+    op       = (0,23);
+
+    
+# Defines
+
+sourcereg: reloc is op [reloc = (op & 0x3F00) >> 8;] { export *:2 reloc; }
+
+dddd: dd is op [dd = ( (op >> 16) & 0x7) | (( (op >> 16) & 0x30) >> 1); ] { export *:2 dd; }
+    
+    
+##################
+#  Instructions  #
+##################
+
+
+#######################
+# Parallel Instructions
+#######################
+# Bits 23..20 = [xxxx] -> (where one or more x bit is set)
+
+# All Move instructions: Bits [7..0] == 0
+
+# Parallel move NOP
+:nop is (bits_0_7=0x0 & bits_8_23=0x2000)
+{
+}
+
+# Parallel move X: -> Y:
+:move_x_to_y is (bits_0_7=0x0 & bits_20_23!=0x0 & bit_23=0x1)
+{
+}
+
+# Parallel move X: or Y: ->
+:move_x_or_y sourcereg dddd is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_22_23=0x1 & bits_20_21!=0x0) &
+                                sourcereg & dddd
+{
+    # dddd Decode ALU register
+}
+
+# Parallel move L: ->
+:move_l is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_20_23=0x4)
+{
+}
+
+# Parallel move I:, R:, U: ->
+:move_iru is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_21_23=0x1)
+{
+}
+
+
+
+
+
+
+###########################
+# Non-Parallel Instructions
+###########################
+# Bits 23..20 = [0000]
+
+:move is (op=0x85E00 & bits_20_23=0x0)
+{
+}
+
+:nop is (op=0x0)
+{
+}

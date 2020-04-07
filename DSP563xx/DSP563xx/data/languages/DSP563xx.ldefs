@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<language_definitions>
+  
+  <language processor="DSP563xx"
+            endian="little"
+            size="24"
+            variant="default"
+            version="1.0"
+            slafile="DSP563xx.sla"
+            processorspec="DSP563xx.pspec"
+            manualindexfile="../manuals/DSP563xx.idx"
+            id="56311:LE:24:default">
+    <description>Motorola DSP56311</description>
+    <compiler name="default" spec="DSP563xx.cspec" id="default"/>
+  </language>  
+  
+</language_definitions>
