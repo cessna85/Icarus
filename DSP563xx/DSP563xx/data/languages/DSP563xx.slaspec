@@ -1,121 +1,2141 @@
-# sleigh specification file for DSP563XX processor
-
+# sleigh specification file for DSP563XX Processor 
+ 
 define endian=little;
-define alignment=1;
-
+define alignment=3;
+ 
 #############
-#	Spaces	#
+#    Spaces    #
 #############
-define  space   p           type=ram_space          size=3 default;
-define  space   x           type=ram_space          size=3;
-define  space   y           type=ram_space          size=3;
-define  space   register    type=register_space     size=3;
+define    space    p            type=ram_space            size=3 default;
+define    space    x            type=ram_space            size=3 ;
+define    space    y            type=ram_space            size=3;
+define    space    register    type=register_space        size=3;
 
 #################
-#	Registers	#
+#    Registers    #
 #################
-
-#################
-#	Registers	#
-#################
-
-# Data ALU Input Registers
-    define register offset=0 size=6 [X Y];
-    define register offset=0 size=3 [X1 X0 Y1 Y0];
-
-# Data ALU Accumulator Registers
+ 
+# Data ALU Input Registers 
+    define register offset=0 size=6 [X Y]; 
+    define register offset=0 size=3 [X1 X0 Y1 Y0]; 
+ 
+# Data ALU Accumulator Registers 
     define register offset=12 size=7 [A B];
     define register offset=12 size=1 [A2 _ _ _ _ _ _ B2 _ _ _ _ _ _];
     define register offset=13 size=3 [A1 A0];
     define register offset=20 size=3 [B1 B0];
+ 
+# PCU Registers
+    define register offset=26 size=3 [OMR];
+    define register offset=26 size=1 [SCS EOM COM];
+@define PEN    "OMR[23, 1]" 
+@define MSW    "OMR[21, 2]" 
+@define SEN    "OMR[20, 1]" 
+@define WRP    "OMR[19, 1]" 
+@define EOV    "OMR[18, 1]" 
+@define EUN    "OMR[17, 1]" 
+@define XYS    "OMR[16, 1]" 
+@define ATE    "OMR[15, 1]" 
+@define APD    "OMR[14, 1]" 
+@define ABE    "OMR[13, 1]" 
+@define BRT    "OMR[12, 1]" 
+@define TAS    "OMR[11, 1]" 
+@define BE    "OMR[10, 1]" 
+@define CDP    "OMR[8, 2]"
+@define MS    "OMR[7, 1]"
+@define SD    "OMR[6, 1]"
+@define EBD    "OMR[4, 1]"
+@define M    "OMR[0, 3]"
+ 
+define register offset=29 size=3 [SR]; 
+define register offset=29 size=1 [EMR MR CCR]; 
+     
+@define CorePriority "SR[22, 2]" 
+@define RoundingMode "SR[21, 1]" 
+@define SaturationMode "SR[20, 1]" 
+@define CacheEnable "SR[19, 1]"
+@define SixteenArithmaticMode "SR[17, 1]"
+@define DoForeverFlag "SR[16, 1]"
+@define DoLoopFlag "SR[15, 1]" 
+@define DoubleMultiplyMode "SR[14, 1]" 
+@define SixteenCompatMode "SR[13, 1]"
+@define ScalingMode "SR[10, 2]"
+@define InterruptMask "SR[8, 2]" 
+@define ScalingFlag "SR[7, 1]" 
+@define LimitFlag "SR[6, 1]" 
+@define ExtensionFlag "SR[5, 1]" 
+@define UnnormalizedFlag "SR[4, 1]"
+@define NegativeFlag "SR[3, 1]"
+@define ZeroFlag "SR[2, 1]"
+@define OverflowFlag "SR[1, 1]"
+@define CarryFlag "SR[0, 1]" 
+ 
+ 
+define register offset=32 size=3 [SSH SSL PC LC LA VBA SZ SP]; 
+ 
+# AGU Registers
+    # Address Registers
+        define register offset=59 size=3 [R7 R6 R5 R4 R3 R2 R1 R0 EP];
+    # Offset Registers 
+        define register offset=86 size=3 [N7 N6 N5 N4 N3 N2 N1 N0]; 
+    # Modifier Registers 
+        define register offset=110 size=3 [M7 M6 M5 M4 M3 M2 M1 M0]; 
+define register offset=134 size=3 [SC];
 
-# General Purpose Registers
-    define register offset=26 size=3 [R0 R1 R2 R3 R4 R5 R6];
 
-# Program Control Unit
-    define register offset=30 size=3 [PC LA LC VBA];
-
-    
 define token inst_24(24)
-    bit_0	= (0, 0)
-    bit_1	= (1, 1)
-    bit_2	= (2, 2)
-    bit_3	= (3, 3)
-    bit_4	= (4, 4)
-    bit_5	= (5, 5)
-    bit_6	= (6, 6)
-    bit_7	= (7, 7)
-    bit_8	= (8, 8)
-    bit_9	= (9, 9)
-    bit_10	= (10, 10)
-    bit_11	= (11, 11)
-    bit_12	= (12, 12)
-    bit_13	= (13, 13)
-    bit_14	= (14, 14)
-    bit_15	= (15, 15)
-    bit_16	= (16, 16)
-    bit_17	= (17, 17)
-    bit_18	= (18, 18)
-    bit_19	= (19, 19)
-    bit_20	= (20, 20)
-    bit_21	= (21, 21)
-    bit_22	= (22, 22)
-    bit_23	= (23, 23)
+    bit_0    = (0, 0) 
+    bit_0_3 = (0, 3) 
+    bit_1    = (1, 1) 
+    bit_2    = (2, 2) 
+    bit_3    = (3, 3) 
+    bit_4    = (4, 4) 
+    bit_5    = (5, 5) 
+    bit_6    = (6, 6) 
+    bit_7    = (7, 7) 
+    bit_8    = (8, 8) 
+    bit_9    = (9, 9) 
+    bit_10    = (10, 10) 
+    bit_11    = (11, 11) 
+    bit_12    = (12, 12) 
+    bit_13    = (13, 13) 
+    bit_14    = (14, 14) 
+    bit_15    = (15, 15) 
+    bit_16    = (16, 16) 
+    bit_17    = (17, 17) 
+    bit_18    = (18, 18) 
+    bit_19    = (19, 19) 
+    bit_20    = (20, 20) 
+    bit_21    = (21, 21) 
+    bit_22    = (22, 22) 
+    bit_23    = (23, 23)
+    op        = (0, 23)
 
-    bits_0_7	= (0, 7)
+    bit_16_23=(16, 23) 
+    dst_3    = (3, 3) 
+    dst_0 = (0, 0) 
+    byte_0    = (0, 7) 
+    byte_1    = (8, 15)
+    byte_2    = (16, 23) 
+    byte_1_2 = (8, 23) 
+    bits_4_6 = (4, 6)
+    bits_4_7 = (4, 7)
+    bits_6_7 = (6, 7)
     bits_8_23	= (8, 23)
+    bits_14_23  = (14, 23)
     bits_20_23	= (20, 23)
     bits_20_21	= (20, 21)
     bits_21_23	= (21, 23)
     bits_22_23	= (22, 23)
-    
-    op       = (0,23);
+    bits_16_18 = (16, 18)
+    bits_16_18_00_8bit = (16, 18)
+	bits_16_18_00_24bit = (16, 18)
+	bits_16_18_00_56bit = (16, 18)
+	bits_16_18_01_8bit = (16, 18)
+	bits_16_18_01_24bit = (16, 18)
+	bits_16_18_01_56bit = (16, 18)
+	bits_16_18_10_8bit = (16, 18)
+	bits_16_18_10_24bit = (16, 18)
+	bits_16_18_10_56bit = (16, 18)
+	bits_16_18_11_8bit = (16, 18)
+	bits_16_18_11_24bit = (16, 18)
+	bits_16_18_11_56bit = (16, 18)
+	
+	bits_11_16_s = (11, 16) signed
 
+    bits_0_2 = (0, 2)
+    bits_0_3 = (0, 3)
+    bits_0_7 = (0, 7)
+    bits_4_23 = (4, 23)
+    bits_5_23 = (5, 23)
+    bits_18_23 = (18, 23)
+    bits_8_10 = (8, 10)
+    bits_5_7 = (5, 7)
+    bits_2_5 = (2, 5)
+    bits_8_10r = (8, 10)
+    bits_8_10_rrr = (8, 10)
+    bits_8_10n = (8, 10)
+    bits_8_12_8bit = (8, 12)
+    bits_8_12_24bit = (8, 12)
+    bits_8_12_56bit = (8, 12)
+    bits_13_17_8bit = (13, 17)
+    bits_13_17_24bit = (13, 17)
+    bits_13_17_56bit = (13, 17)
+    bits_16_20_8bit = (16, 20)
+    bits_16_20_24bit = (16, 20)
+    bits_16_20_56bit = (16, 20)
+
+
+    bits_0_4_8bit  = (0, 4)
+    bits_0_4_24bit = (0, 4)
+    bits_0_4_56bit = (0, 4)
     
+    
+    
+    bits_8_13 = (8, 13)
+    bits_10_11 = (10, 11)
+    bits_11_13 = (11, 13)
+    bits_11_23 = (11, 23)
+    bits_12_15 = (12, 15)
+    bits_13_15 = (13, 15)
+    bits_13_15r = (13, 15)
+    bits_13_15n = (13, 15)
+    bits_13_23 = (13, 23)
+    
+
+    xy_w = (22, 22)
+    xy_mm = (20, 21)
+    xy_ee_24bit = (18, 19)
+    xy_ee_56bit = (18, 19)
+    xy_ff_24bit = (16, 17)
+    xy_ff_56bit = (16, 17)
+    xy_W = (15, 15)
+    xy_rr_upper_r = (13, 14)
+    xy_rr_lower_r = (13, 14)
+    xy_rr_upper_n = (13, 14)
+    xy_rr_lower_n = (13, 14)
+    xy_MM = (11, 12)
+    xy_RRR_r = (8, 10)
+    xy_RRR_n = (8, 10)
+    
+    mmm = (11, 13)
+
+    j = (4, 4)    
+    jjj_a = (4, 6)
+    jjj_b = (4, 6)
+
+    jjj_56_bit_a = (4, 6)
+    jjj_56_bit_b = (4, 6)
+    jjj_48_bit = (4, 6)
+    jjj_24_bit = (4, 6)
+    
+    add_iiiiii = (8, 13)
+    and_iiiiii = (8, 13)
+    asl_iiiiii = (1, 6)
+    bits_8_13_iiiiii = (8, 13)
+	bbbbb = (0, 4)
+	bits_0_3_bbbb = (0, 3)
+    
+    bits_1_7 = (1,7)
+    bits_2_7 = (2,7)
+    bits_8_11 = (8, 11)
+    bits_12_19 = (12, 19)
+    bits_14_15 = (14, 15)
+    bits_16_17 = (16, 17)
+    bits_16_23 = (16, 23)
+    bits_17_23 = (17, 23)
+    bits_17_18 = (17, 18)
+    bits_17_19 = (17, 19)
+    bits_18_19 = (18, 19)
+    addl_d = (3, 3)
+    addl_s = (3, 3)    
+
+    asl_D = (0, 0)
+    asl_S = (7, 7)
+    asl_S2 = (4, 4)
+    asl_sss = (1, 3)
+    
+    and_jj = (4, 5)
+    and_d = (3, 3)
+    
+    andi_iiiiiiii = (8, 15)
+    andi_EE = (0, 1)
+    
+    bcc_aaaaa = (0, 4)
+    bcc_aaaa  = (6, 9)
+    bit_19_d = (19, 19)
+    bit_17_d = (17, 17)
+    bit_18_e = (18, 18)
+    bit_16_F = (16, 16)
+    bit_16_d = (16, 16)
+    bit_16_d2 = (16, 16)
+    ff_y = (16, 17)
+    ff_ab = (16, 17)
+    ff_x = (18, 19)
+    ff_ab2 = (18, 19)
+    
+    bcc_rn = (8, 10)
+    
+    bits_7_11 = (7, 11)
+    bits_0_2r = (0, 2)
+    bits_3_7 = (3, 7)
+    dst_3_opposite = (3, 3)
+    bit_4_j = (4, 4)
+    bits_0_5 = (0, 5)
+    bits_0_1_ee = (0, 1)
+    bits_4_5_jj = (4, 5)
+    bits_1_3_sss = (1, 3)
+    bchg_S = (6, 6)
+    bchg_aa = (8, 13)
+    bchg_pp = (8, 13)
+    bchg_qq = (8, 13)   
+    
+    dmac_d = (5, 5)
+    bits_1_23 = (1, 23)
+    
+    source_ggg_56_bit_b = (1, 3)
+    source_ggg_56_bit_a = (1, 3)
+    source_ggg_24_bit = (1, 3)
+
+    cmp_iiiiii = (8, 13)
+    cmpu_ggg = (1, 3)
+    cmpu_d = (0, 0)
+    bits_1_3 = (1, 3)    
+
+    div_jj = (4, 5)
+    
+    bits_10_23 = (10, 23)
+    bits_9_23 = (9, 23)
+    bit_2_k = (2, 2)
+    bits_0_1 = (0, 1)
+    bits_4_5_QQ = (4, 5)
+    bits_4_5_qq = (4, 5)
+    bits_6_23 = (6, 23)
+    source_jjj_56_bit_b = (4, 6)
+    source_jjj_56_bit_a = (4, 6)
+    source_jjj_24_bit = (4, 6)
+    bits_8_9_dd = (8, 9)
+    bits_10_13 = (10, 13)
+    bits_8_10_ddd_8bit = (8, 10)
+    bits_8_10_ddd_24bit = (8, 10)
+    bits_8_10_ddd_56bit = (8, 10)
+    bits_9_10 = (9, 10)
+    bits_8_13_triple = (8, 13)
+    bits_12_23 = (12, 23)
+    bits_7_23 = (7, 23)
+    bits_0_3_QQQQ = (0, 3)
+    bits_0_3_QQQQ_op1 = (0, 3)
+    bits_0_3_QQQQ_op2 = (0, 3)
+    bits_4_6_QQQ_op1 = (4, 6)
+    bits_4_6_QQQ_op2 = (4, 6)
+    dst_5 = (5, 5)
+    bits_2_23   = (2, 23)
+    clb_d = (0, 0)
+    clb_s = (1, 1)
+    clr_d = (3, 3)
+    
+    bits_0_5_pppppp = (0, 5)
+    bits_0_5_qqqqqq = (0, 5)
+    bit_15_W = (15, 15)
+    bit_14_W = (14, 14)
+    bit_16_s = (16, 16)
+    bit_6_S = (6, 6)
+    bit_6_q = (6, 6)
+    bits_15_23 = (15, 23)
+    bits_0_4 = (0, 4)
+    bits_0_5_triple = (0, 5)
+    bits_0_1_dd = (0, 1)
+    bits_0_2_ddd_56bit = (0, 2)
+    bits_0_2_ddd_8bit = (0, 2)
+    bits_0_2_ddd_24bit = (0, 2)
+    bits_1_2 = (1, 2)
+    bits_3_5 = (3, 5)
+    bits_11_16 = (11, 16)
+    bits_2_3 = (2, 3)
+    
+    bits_0_2_56bit = (0, 2)
+    bits_0_2_24bit = (0, 2)
+    bits_0_2_8bit = (0, 2)
+    bits_8_11_ssss = (8, 11)
+    bits_0_3_dddd = (0, 3)
+    bits_11_13_s = (11, 13) signed
+    bits_1_5 = (1, 5)
+    bits_4_5 = (4, 5)
+    ;
+
+
+
+define token ext24(24)
+    imm24 = (0, 23)
+    imm24_s = (0, 23) signed;
+attach variables [bits_0_1_ee] [MR CCR COM EOM];
+attach variables [bits_4_5_jj] [X0 X1 Y0 Y1];
+
+attach variables [dst_3 dst_0 bit_19_d bit_17_d bit_16_d bit_16_d2 dst_5] [A B];
+attach variables [dst_3_opposite] [B A];
+attach variables [bit_4_j] [X Y];
+attach variables [bit_18_e] [X0 X1];
+attach variables [bit_16_F] [Y0 Y1];
+attach variables [bits_4_5_QQ] [Y1 X0 Y0 X1];
+attach variables [ff_x] [X0 X1 _ _];
+attach variables [ff_y] [Y0 Y1 _ _];
+attach variables [ff_ab ff_ab2] [_ _ A B];
+
+s2d2: ff_y is ff_y & bit_17=0 {export *:7 ff_y;} 
+s2d2: ff_ab is ff_ab & bit_17=1 {export *:7 ff_ab;}
+s1d1: ff_x is ff_x & bit_19=0 {export *:7 ff_x;}
+s1d1: ff_ab2 is ff_ab2 & bit_19=1 {export *:7 ff_ab2;}
+
+attach variables [bits_0_3_dddd]
+[
+	R0 R1 R2 R3 R4 R5 R6 R7
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+
+attach variables [bits_8_9_dd]          [X0 X1 Y0 Y1];
+attach variables [bits_8_10_ddd_24bit]  [A0 B0 _  _ A1 B1 _ _];
+attach variables [bits_8_10_ddd_8bit]   [_  _ A2 B2 _  _  _ _];
+attach variables [bits_8_10_ddd_56bit]  [_  _ _  _  _  _  A B];
+attach variables [bits_8_13_triple]     
+[
+    _  _  _  _  _  _  _  _
+    _  _  _  _  _  _  _  _
+    R0 R1 R2 R3 R4 R5 R6 R7
+    N0 N1 N2 N3 N4 N5 N6 N7
+    M0 M1 M2 M3 M4 M5 M6 M7
+    _  _  EP _  _  _  _  _
+    VBA SC _ _  _  _  _  _
+    SZ SR OMR SP SSH SSL LA LC
+    
+];
+
+
+bits_8_13_DDDDDD: bits_8_9_dd         is bits_10_13=1 & bits_8_9_dd 
+{
+    export *:7 bits_8_9_dd;
+}
+bits_8_13_DDDDDD: bits_8_10_ddd_24bit is bits_11_13=1 & (bits_9_10=0 | bits_9_10=2) & bits_8_10_ddd_24bit 
+{
+    export *:7 bits_8_10_ddd_24bit;
+}
+bits_8_13_DDDDDD: bits_8_10_ddd_8bit  is bits_11_13=1 & bits_9_10=1 & bits_8_10_ddd_8bit 
+{
+    export *:7 bits_8_10_ddd_8bit;
+}
+bits_8_13_DDDDDD: bits_8_10_ddd_56bit is bits_11_13=1 & bits_9_10=3 & bits_8_10_ddd_56bit 
+{
+    export *:7 bits_8_10_ddd_56bit;
+}
+bits_8_13_DDDDDD: bits_8_13_triple    is bits_8_13_triple 
+{
+    export *:7 bits_8_13_triple;
+}
+
+attach variables [bits_0_1_dd]          [X0 X1 Y0 Y1];
+attach variables [bits_0_2_ddd_24bit]  [A0 B0 _  _ A1 B1 _ _];
+attach variables [bits_0_2_ddd_8bit]   [_  _ A2 B2 _  _  _ _];
+attach variables [bits_0_2_ddd_56bit]  [_  _ _  _  _  _  A B];
+attach variables [bits_0_5_triple]     
+[
+    _  _  _  _  _  _  _  _
+    _  _  _  _  _  _  _  _
+    R0 R1 R2 R3 R4 R5 R6 R7
+    N0 N1 N2 N3 N4 N5 N6 N7
+    M0 M1 M2 M3 M4 M5 M6 M7
+    _  _  EP _  _  _  _  _
+    VBA SC _ _  _  _  _  _
+    SZ SR OMR SP SSH SSL LA LC
+    
+];
+
+
+bits_0_5_dddddd: bits_0_1_dd         is bits_2_5=1 & bits_0_1_dd 
+{
+    export *:7 bits_0_1_dd;
+}
+bits_0_5_dddddd: bits_0_2_ddd_24bit is bits_3_5=1 & (bits_1_2=0 | bits_1_2=2) & bits_0_2_ddd_24bit 
+{
+    export *:7 bits_0_2_ddd_24bit;
+}
+bits_0_5_dddddd: bits_0_2_ddd_8bit  is bits_3_5=1 & bits_1_2=1 & bits_0_2_ddd_8bit 
+{
+    export *:7 bits_0_2_ddd_8bit;
+}
+bits_0_5_dddddd: bits_0_2_ddd_56bit is bits_3_5=1 & bits_1_2=3 & bits_0_2_ddd_56bit 
+{
+    export *:7 bits_0_2_ddd_56bit;
+}
+bits_0_5_dddddd: bits_0_5_triple    is bits_0_5_triple 
+{
+    export *:7 bits_0_5_triple;
+}
+
+
+
+
+attach variables [bits_8_12_8bit bits_13_17_8bit bits_16_20_8bit bits_0_4_8bit] 
+[
+	_  _  _  _
+	_  _  _  _  _  _ A2 B2 
+	_  _  _  _ 
+	_  _  _  _  _  _  _  _ 
+	_  _  _  _  _  _  _  _
+];
+
+attach variables [bits_8_12_24bit bits_13_17_24bit bits_16_20_24bit bits_0_4_24bit]
+[
+	_  _  _  _
+	X0 X1 Y0 Y1 A0 B0 _ _ 
+	A1 B1 _  _
+	R0 R1 R2 R3 R4 R5 R6 R7 
+	N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+attach variables [bits_8_12_56bit bits_13_17_56bit bits_16_20_56bit bits_0_4_56bit]
+[
+	_  _  _  _ 
+	_  _  _  _  _  _  _ _ 
+	_  _  A  B
+	_  _  _  _  _  _  _  _  
+	_  _  _  _  _  _  _  _ 
+];
+
+bits_8_12: bits_8_12_8bit is bits_8_12_8bit & bits_8_12_8bit=10 {export *:7 bits_8_12_8bit;}
+bits_8_12: bits_8_12_8bit is bits_8_12_8bit & bits_8_12_8bit=11 {export *:7 bits_8_12_8bit;}
+bits_8_12: bits_8_12_56bit  is bits_8_12_56bit & bits_8_12_56bit=14 {export *:7 bits_8_12_56bit;}
+bits_8_12: bits_8_12_56bit  is bits_8_12_56bit & bits_8_12_56bit=15 {export *:7 bits_8_12_56bit;}
+bits_8_12: bits_8_12_24bit is bits_8_12_24bit {export *:7 bits_8_12_24bit;}
+
+bits_0_4_DDDDD: bits_0_4_8bit  is bits_0_4_8bit  & bits_0_4_8bit=10  {export *:7 bits_0_4_8bit;}
+bits_0_4_DDDDD: bits_0_4_8bit  is bits_0_4_8bit  & bits_0_4_8bit=11  {export *:7 bits_0_4_8bit;}
+bits_0_4_DDDDD: bits_0_4_56bit is bits_0_4_56bit & bits_0_4_56bit=14 {export *:7 bits_0_4_56bit;}
+bits_0_4_DDDDD: bits_0_4_56bit is bits_0_4_56bit & bits_0_4_56bit=15 {export *:7 bits_0_4_56bit;}
+bits_0_4_DDDDD: bits_0_4_24bit is bits_0_4_24bit                     {export *:7 bits_0_4_24bit;}
+
+
+
+sign_unsign: "su" is bit_6=0 {}
+sign_unsign: "uu" is bit_6=1 {}
+plus_minus_bit_4: + is bit_4=0 {}
+plus_minus_bit_4: - is bit_4=1 {}
+
+attach variables [bits_0_3_QQQQ_op1] [X0 Y0 X1 Y1 X0 Y0 X1 Y1 X1 Y1 X0 Y0 Y1 X0 Y0 X1];
+attach variables [bits_0_3_QQQQ_op2] [X0 Y0 X0 Y0 Y1 X0 Y0 X1 X1 Y1 X1 Y1 X0 Y0 X1 Y1];
+
+
+
+bits_13_17: bits_13_17_8bit is bits_13_17_8bit & bits_13_17_8bit=10 {export *:7 bits_13_17_8bit;}
+bits_13_17: bits_13_17_8bit is bits_13_17_8bit & bits_13_17_8bit=11 {export *:7 bits_13_17_8bit;}
+bits_13_17: bits_13_17_56bit  is bits_13_17_56bit & bits_13_17_56bit=14 {export *:7 bits_13_17_56bit;}
+bits_13_17: bits_13_17_56bit  is bits_13_17_56bit & bits_13_17_56bit=15 {export *:7 bits_13_17_56bit;}
+bits_13_17: bits_13_17_24bit is bits_13_17_24bit {export *:7 bits_13_17_24bit;}
+
+
+
+bits_16_20: bits_16_20_8bit is bits_16_20_8bit & bits_16_20_8bit=10 {export *:7 bits_16_20_8bit;}
+bits_16_20: bits_16_20_8bit is bits_16_20_8bit & bits_16_20_8bit=11 {export *:7 bits_16_20_8bit;}
+bits_16_20: bits_16_20_56bit  is bits_16_20_56bit & bits_16_20_56bit=14 {export *:7 bits_16_20_56bit;}
+bits_16_20: bits_16_20_56bit  is bits_16_20_56bit & bits_16_20_56bit=15 {export *:7 bits_16_20_56bit;}
+bits_16_20: bits_16_20_24bit is bits_16_20_24bit {export *:7 bits_16_20_24bit;}
+
+
+
+attach variables [j] [X Y];
+attach variables [bits_16_18_00_24bit]
+[
+    _  _  _  _ X0 X1 Y0 Y1 
+];
+
+attach variables [bits_16_18_01_8bit] 
+[
+    _  _  A2 B2 _  _  _  _ 
+];
+
+attach variables [bits_16_18_01_24bit]
+[
+    A0 B0 _  _ A1 B1 _  _  
+];
+
+attach variables [bits_16_18_01_56bit]
+[
+    _  _  _  _  _  _  A  B
+];
+
+attach variables [bits_16_18_10_24bit]
+[
+    R0 R1 R2 R3 R4 R5 R6 R7
+];
+
+
+
+attach variables [bits_16_18_11_24bit]
+[
+    N0 N1 N2 N3 N4 N5 N6 N7
+];
+
+attach variables [bits_8_10r bits_0_2r] [ R0 R1 R2 R3 R4 R5 R6 R7 ];
+attach variables [bits_8_10n] [ N0 N1 N2 N3 N4 N5 N6 N7 ];
+attach variables [bits_13_15r] [ R0 R1 R2 R3 R4 R5 R6 R7 ];
+attach variables [bits_13_15n] [ N0 N1 N2 N3 N4 N5 N6 N7 ];
+
+
+attach variables [bits_0_1] [X0 X1 Y0 Y1];
+attach variables [bits_0_2_24bit] [A0 B0 _ _ A1 B1 _ _];
+attach variables [bits_0_2_8bit] [_ _ A2 B2 _ _ _ _];
+attach variables [bits_0_2_56bit] [_ _ _ _ _ _ A B];
+
+bits_0_3_DDDD: bits_0_1 is bits_2_3=1 & bits_0_1 {export *:7 bits_0_1;}
+bits_0_3_DDDD: bits_0_2_56bit is bits_1_3=0x7 & bits_0_2_56bit {export *:7 bits_0_2_56bit;}
+bits_0_3_DDDD: bits_0_2_8bit is bit_3=1 & bits_1_2=1 & bits_0_2_8bit {export *:7 bits_0_2_8bit;}
+bits_0_3_DDDD: bits_0_2_24bit is bits_0_2_24bit {export *:7 bits_0_2_24bit;}
+
+
+
+#################
+#	Macro		#
+#################
+
+macro zeroflags(op) 
+{
+  $(ZeroFlag) = (op == 0);
+}
+
 # Defines
+ddddd: bits_16_18_00_24bit is bits_20_21=0b00 & bits_16_18_00_24bit & bit_18=1 {export *:7 bits_16_18_00_24bit;}
+ddddd: bits_16_18_01_8bit is bits_20_21=0b01 & bits_17_18=1 & bits_16_18_01_8bit {export *:7 bits_16_18_01_8bit;}
+ddddd: bits_16_18_01_56bit is bits_20_21=0b01 & bits_17_18=3 & bits_16_18_01_56bit {export *:7 bits_16_18_01_56bit;}
+ddddd: bits_16_18_01_24bit is bits_20_21=0b01 & bit_17=0 & bits_16_18_01_24bit {export *:7 bits_16_18_01_24bit;}
 
-sourcereg: reloc is op [reloc = (op & 0x3F00) >> 8;] { export *:2 reloc; }
+ddddd: bits_16_18_10_24bit is bits_20_21=0b10 & bits_16_18_10_24bit {export *:7 bits_16_18_10_24bit;}
+ddddd: bits_16_18_11_24bit is bits_20_21=0b11 & bits_16_18_11_24bit {export *:7 bits_16_18_11_24bit;}
+aaaaaa: imm_addr is op [imm_addr  = op >> 8 & 0b111111;] {export *[const]:3 imm_addr;}
+aaaaaax: imm_addr is op [imm_addr  = op >> 8 & 0b111111;] {export *[x]:3 imm_addr;}
+aaaaaay: imm_addr is op [imm_addr  = op >> 8 & 0b111111;] {export *[y]:3 imm_addr;}
+aaaaaaa_split:     aaaaaaa is bit_6 & bits_11_16_s [aaaaaaa = ((bits_11_16_s << 1) | bit_6); ] {export *[const] aaaaaaa;}
+aaaaaaa_split_lua: aaaaaaa is bits_4_7 & bits_11_13_s [aaaaaaa = ((bits_11_13_s << 4) | bits_4_7); ] {export *[const] aaaaaaa;}
+iiiiiiii: tmp is op [tmp = (op >> 8) & 0b11111111;] {export *[const]:1 tmp;}
+ppppppx: addr is bits_0_5_pppppp [addr=0xFFFFC0 + bits_0_5_pppppp;] {export *[x] addr;}
+ppppppy: addr is bits_0_5_pppppp [addr=0xFFFFC0 + bits_0_5_pppppp;] {export *[y] addr;}
+qqqqqqx: addr is bits_0_5_qqqqqq [addr=0xFFFF80 + bits_0_5_qqqqqq;] {export *[x] addr;}
+qqqqqqy: addr is bits_0_5_qqqqqq [addr=0xFFFF80 + bits_0_5_qqqqqq;] {export *[y] addr;}
+qqqqqq_split_y: addr is bits_0_4 & bit_6_q [addr=0xFFFF80 + ((bit_6_q << 6) | bits_0_4);] {export *[y] addr;}
+qqqqqq_split_x: addr is bits_0_4 & bit_6_q [addr=0xFFFF80 + ((bit_6_q << 6) | bits_0_4);] {export *[x] addr;}
+abs24: imm24 is op; imm24{
+    export *[p]:3 imm24;
+}
 
-dddd: dd is op [dd = ( (op >> 16) & 0x7) | (( (op >> 16) & 0x30) >> 1); ] { export *:2 dd; }
+############################
+# 48-bit wide instructions #
+############################
+parallelop: "#"imm24"," ddddd is op & mmm=6 & bits_22_23=1 & bit_14=1 & ddddd & bits_8_10=0b100 ; imm24 {	}
+
+
+############################
+# 24-bit wide instructions #
+############################
+
+parallelop: "" is bits_8_23=0x2000 {}
+parallelop: "" is bits_8_23=0x0 {}
+
+
+
+parallelop:  "#"iiiiiiii,bits_16_20 is bits_20_23=0x2 & iiiiiiii  & bits_16_20 {}
+parallelop:  "#"iiiiiiii,bits_16_20 is bits_20_23=0x3 & iiiiiiii  & bits_16_20 {}
+parallelop:  bits_13_17,bits_8_12   is bits_20_23=0x2 & bits_18_19=0x0 & bits_8_12 & bits_13_17 {}
+
+ifcc_xxx_condition: "cc" is bits_8_11=0 {}
+ifcc_xxx_condition: "ge" is bits_8_11=1 {}
+ifcc_xxx_condition: "ne" is bits_8_11=2 {}
+ifcc_xxx_condition: "pl" is bits_8_11=3 {}
+ifcc_xxx_condition: "nn" is bits_8_11=4 {}
+ifcc_xxx_condition: "ec" is bits_8_11=5 {}
+ifcc_xxx_condition: "lc" is bits_8_11=6 {}
+ifcc_xxx_condition: "gt" is bits_8_11=7 {}
+ifcc_xxx_condition: "cs" is bits_8_11=8 {}
+ifcc_xxx_condition: "lt" is bits_8_11=9 {}
+ifcc_xxx_condition: "eq" is bits_8_11=10 {}
+ifcc_xxx_condition: "mi" is bits_8_11=11 {}
+ifcc_xxx_condition: "nr" is bits_8_11=12 {}
+ifcc_xxx_condition: "es" is bits_8_11=13 {}
+ifcc_xxx_condition: "ls" is bits_8_11=14 {}
+ifcc_xxx_condition: "le" is bits_8_11=15 {}
+
+
+
+parallelop: "IF"^ifcc_xxx_condition is bits_20_23=0x2 & bits_12_19=0x2 & ifcc_xxx_condition{}
+parallelop: "IF"^ifcc_xxx_condition is bits_20_23=0x3 & bits_12_19=0x2 & ifcc_xxx_condition {}
+parallelop: "IF"^ifcc_xxx_condition".U" is bits_20_23=0x2 & bits_12_19=0x3 & ifcc_xxx_condition {}
+parallelop: "IF"^ifcc_xxx_condition".U" is bits_20_23=0x3 & bits_12_19=0x3 & ifcc_xxx_condition {}
+
+
+lll: "A10" is bit_19=0 & bits_16_17=0 {}
+lll: "B10" is bit_19=0 & bits_16_17=1 {}
+lll: "X" is bit_19=0 & bits_16_17=2 {}
+lll: "Y" is bit_19=0 & bits_16_17=3 {}
+lll: "A" is bit_19=1 & bits_16_17=0 {}
+lll: "B" is bit_19=1 & bits_16_17=1 {}
+lll: "AB" is bit_19=1 & bits_16_17=2 {}
+lll: "BA" is bit_19=1 & bits_16_17=3 {}
+
+
+eax: (bits_8_10r)-bits_8_10n is mmm=0 & bits_8_10r & bits_8_10n 
+{
+	local tmp=bits_8_10r; 
+	bits_8_10r = bits_8_10r - bits_8_10n; 
+	export *[x]:3 tmp;
+}
+eax: (bits_8_10r)+bits_8_10n is mmm=1 & bits_8_10r & bits_8_10n 
+{
+	local tmp=bits_8_10r; 
+	bits_8_10r = bits_8_10r + bits_8_10n; 
+	export *[x]:3 tmp;
+}
+eax: (bits_8_10r)- is mmm=2 & bits_8_10r 
+{
+	local tmp=bits_8_10r; 
+	bits_8_10r=bits_8_10r-1; 
+	export *[x]:3 tmp;
+}
+eax: (bits_8_10r)+ is mmm=3 & bits_8_10r 
+{
+	local tmp=bits_8_10r; 
+	bits_8_10r=bits_8_10r+1; 
+	export *[x]:3 tmp;
+}
+eax: (bits_8_10r) is mmm=4 & bits_8_10r 
+{
+	export *[x]bits_8_10r;
+}
+eax: (bits_8_10r+bits_8_10n) is mmm=5 & bits_8_10r & bits_8_10n 
+{
+	local tmp = bits_8_10r + bits_8_10n; 
+	export *[x]:3 tmp;
+}
+eax: "#"imm24 is mmm=6 & bits_8_10_rrr=4; imm24
+{
+    export *[const]:3 imm24;
+}
+eax: "#"imm24 is mmm=6; imm24 
+{
+	export *[x]:3 imm24;
+}
+eax: -(bits_8_10r) is mmm=7 & bits_8_10r 
+{
+	bits_8_10r = bits_8_10r - 1;
+	export *[x]:3 bits_8_10r;
+}
+
+eay: (bits_8_10r)-bits_8_10n is mmm=0 & bits_8_10r & bits_8_10n 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r = bits_8_10r - bits_8_10n; 
+    export *[y]tmp;
+}
+eay: (bits_8_10r)+bits_8_10n is mmm=1 & bits_8_10r & bits_8_10n 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r = bits_8_10r + bits_8_10n; 
+    export *[y]:3 tmp;
+}
+eay: (bits_8_10r)- is mmm=2 & bits_8_10r 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r=bits_8_10r-1; 
+    export *[y]:3 tmp;
+}
+eay: (bits_8_10r)+ is mmm=3 & bits_8_10r 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r=bits_8_10r+1; 
+    export *[y]:3 tmp;
+}
+eay: (bits_8_10r) is mmm=4 & bits_8_10r 
+{
+    export *[y]:3 bits_8_10r;
+}
+eay: (bits_8_10r+bits_8_10n) is mmm=5 & bits_8_10r & bits_8_10n 
+{
+    local tmp = bits_8_10r + bits_8_10n; 
+    export *[y]:3 tmp;
+}
+eay: "#"imm24 is mmm=6 & bits_8_10_rrr=4; imm24
+{
+    export *[const]:3 imm24;
+}
+eay: "#"imm24 is mmm=6; imm24 
+{
+    export *[y]:3 imm24;
+}
+eay: -(bits_8_10r) is mmm=7 & bits_8_10r 
+{
+    bits_8_10r = bits_8_10r - 1;
+    export *[y]:3 bits_8_10r;
+}
+
+eap: (bits_8_10r)-bits_8_10n is mmm=0 & bits_8_10r & bits_8_10n 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r = bits_8_10r - bits_8_10n; 
+    export *[p]:3 tmp;
+}
+eap: (bits_8_10r)+bits_8_10n is mmm=1 & bits_8_10r & bits_8_10n 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r = bits_8_10r + bits_8_10n; 
+    export *[p]:3 tmp;
+}
+eap: (bits_8_10r)- is mmm=2 & bits_8_10r 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r=bits_8_10r-1; 
+    export *[p]:3 tmp;
+}
+eap: (bits_8_10r)+ is mmm=3 & bits_8_10r 
+{
+    local tmp=bits_8_10r; 
+    bits_8_10r=bits_8_10r+1; 
+    export *[p]:3 tmp;
+}
+eap: (bits_8_10r) is mmm=4 & bits_8_10r 
+{
+    export *[p]:3 bits_8_10r;
+}
+eap: (bits_8_10r+bits_8_10n) is mmm=5 & bits_8_10r & bits_8_10n 
+{
+    local tmp = bits_8_10r + bits_8_10n; 
+    export *[p]:3 tmp;
+}
+eap: "#"imm24 is mmm=6 & bits_8_10_rrr=4; imm24
+{
+    export *[const]:3 imm24;
+}
+eap: "#"imm24 is mmm=6; imm24 
+{
+    export *[p]:3 imm24;
+}
+eap: -(bits_8_10r) is mmm=7 & bits_8_10r 
+{
+    bits_8_10r = bits_8_10r - 1;
+    export *[p]:3 bits_8_10r;
+}
+
+with parallelop: bits_13_23=0b00100000010 ... { #Update Register
+	:eap is eap {}
+}
+
+with parallelop: (bits_20_23=0x4 & bit_18=0) ... { #Long Memory Data Move
+	with parallelop: bit_15=0 ... {
+		: lll,"L":aaaaaa is (lll & aaaaaa & bit_14=0) ... {}
+		: lll,"L":eap is (lll & bit_14=1) ... & eap {}
+	}
+	with parallelop: bit_15=1 ... {
+		: "L":aaaaaa,lll is (lll & aaaaaa & bit_14=0) ... {}
+		: "L":eap,lll is (lll & bit_14=1) ... & eap {}
+	}
+}
+
+with parallelop: (bits_20_23=1 & bit_14=0) ... { # X:R
+	with parallelop: bit_15=0 ... {
+		:s1d1,"x":eax bit_17_d,bit_16_F is (s1d1 & bit_17_d & bit_16_F) ... & eax {}
+	}
+	with parallelop: bit_15=1 ... {
+		:"x":eax,s1d1 bit_17_d,bit_16_F is (s1d1 & bit_17_d & bit_16_F) ... & eax {}
+	}
+}
+
+with parallelop: (bits_20_23=1 & bit_14=1) ... { # R:Y
+	with parallelop: bit_15=0 ... {
+		:bit_19_d,bit_18_e s2d2,"y":eay is (bit_19_d & bit_18_e & s2d2) ... & eay {}
+	}
+	with parallelop: bit_15=1 ... {
+		:bit_19_d,bit_18_e "y":eay,s2d2 is (bit_19_d & bit_18_e & s2d2) ... & eay {}
+	}
+}
+
+with parallelop: (bits_17_23=4) ... {
+	with parallelop: bits_14_15=0 ... {
+		: bit_16_d,"x":eax "X0",bit_16_d2 is  (bit_16_d & bit_16_d2) ... & eax {}
+	}
+	with parallelop: bits_14_15=2 ... {
+		:"Y0", bit_16_d bit_16_d2,"y":eay is (bit_16_d & bit_16_d2) ... & eay {}
+	}
+}
+
+# 48bit (optional)
+with parallelop: bits_22_23=1 ... { #dis_pm_4
+	with parallelop: bit_19=0 ... { # x memory data move
+		with parallelop: bit_15=0 ... { # w bit
+			: ddddd,"x":eax is (bit_19=0 & bit_14=1 & ddddd ) ... & eax {}
+		}
+		with parallelop: bit_15=1 ... {
+			: "x":eax,ddddd is (bit_19=0 & bit_14=1 & ddddd ) ... & eax {}
+		}
+	}
+	with parallelop: bit_19=1 ... { # y memory data move
+		with parallelop: bit_15=0 ... { # w bit
+			: ddddd,"y":eay is ( bit_14=1 & ddddd ) ... & eay {}
+		}
+		with parallelop: bit_15=1 ... {
+			: "y":eay,ddddd is ( bit_14=1 & ddddd ) ... & eay {}
+		}
+	}
+}
+
+# 24bit
+with parallelop: bits_22_23=1 { #dis_pm_4
+	with parallelop: bit_19=0 { # x memory data move
+		with parallelop: bit_15=0 { # w bit
+			: ddddd,"x":aaaaaa is (bit_14=0 & ddddd) & aaaaaa {}
+		}
+		with parallelop: bit_15=1 {
+			: "x":aaaaaa,ddddd is (bit_14=0 & ddddd ) & aaaaaa {}
+		}
+	}
+	with parallelop: bit_19=1 { # y memory data move
+		with parallelop: bit_15=0 { # w bit
+			: ddddd,"y":aaaaaa is (bit_14=0 & ddddd) & aaaaaa {}
+		}
+		with parallelop: bit_15=1 {
+			: "y":aaaaaa,ddddd is (bit_14=0 & ddddd ) & aaaaaa {}
+		}
+	}
+}
+ 
+# Move w/ Rel Displacement
+
+
+
+
+attach variables [xy_ee_24bit] [X0 X1 _ _];
+attach variables [xy_ee_56bit] [_ _ A B];
+
+
+
+attach variables [xy_ff_24bit] [Y0 Y1 _ _];
+attach variables [xy_ff_56bit] [_ _ A B];
+
+attach variables [xy_rr_upper_r] [R4 R5 R6 R7];
+attach variables [xy_rr_lower_r] [R0 R1 R2 R3];
+
+attach variables [xy_rr_upper_n] [N4 N5 N6 N7];
+attach variables [xy_rr_lower_n] [N0 N1 N2 N3];
+
+attach variables [xy_RRR_r] [R0 R1 R2 R3 R4 R5 R6 R7];
+attach variables [xy_RRR_n] [N0 N1 N2 N3 N4 N5 N6 N7];
+
+xy_ee_table: xy_ee_56bit is bit_19=1 & xy_ee_56bit {export *:7 xy_ee_56bit;}
+xy_ee_table: xy_ee_24bit is bit_19=0 & xy_ee_24bit {export *:7 xy_ee_24bit;}
+xy_ff_table: xy_ff_56bit is bit_17=1 & xy_ff_56bit {export *:7 xy_ff_56bit;}
+xy_ff_table: xy_ff_24bit is bit_17=0 & xy_ff_24bit {export *:7 xy_ff_24bit;}
+xy_rr_table_r: xy_rr_upper_r is xy_rr_upper_r & bit_10=0 {export xy_rr_upper_r;}
+xy_rr_table_r: xy_rr_lower_r is xy_rr_lower_r & bit_10=1 {export xy_rr_lower_r;}
+xy_rr_table_n: xy_rr_upper_n is xy_rr_upper_n & bit_10=0 {export xy_rr_upper_n;}
+xy_rr_table_n: xy_rr_lower_n is xy_rr_lower_n & bit_10=1 {export xy_rr_lower_n;}
+ 
+xy_eax: (xy_RRR_r) is xy_MM=0 & xy_RRR_r {}
+xy_eax: (xy_RRR_r)+xy_RRR_n is xy_MM=1 & xy_RRR_r & xy_RRR_n {}
+xy_eax: (xy_RRR_r)- is xy_MM=2 & xy_RRR_r {}
+xy_eax: (xy_RRR_r)+ is xy_MM=3 & xy_RRR_r {}
+
+xy_eay: (xy_rr_table_r) is xy_mm=0 & xy_rr_table_r{}
+xy_eay: (xy_rr_table_r)+xy_rr_table_n is xy_mm=1 & xy_rr_table_r & xy_rr_table_n {}
+xy_eay: (xy_rr_table_r)- is xy_mm=2 & xy_rr_table_r {}
+xy_eay: (xy_rr_table_r)+ is xy_mm=3 & xy_rr_table_r {}
+
+with parallelop: bit_23=1 {
+	with parallelop: xy_w=0 & xy_W=0 {
+		: xy_ee_table,"x":xy_eax xy_ff_table,"y":xy_eay is xy_eax & xy_eay & xy_ee_table & xy_ff_table {}
+	}
+	with parallelop: xy_w=0 & xy_W=1 {
+		: "x":xy_eax,xy_ee_table xy_ff_table,"y":xy_eay is xy_eax & xy_eay & xy_ee_table & xy_ff_table {}
+	}
+	with parallelop: xy_w=1 & xy_W=0 {
+		: xy_ee_table,"x":xy_eax "y":xy_eay,xy_ff_table is xy_eax & xy_eay & xy_ee_table & xy_ff_table {}
+	}
+	with parallelop: xy_w=1 & xy_W=1 {
+		: "x":xy_eax,xy_ee_table "y":xy_eay,xy_ff_table is xy_eax & xy_eay & xy_ee_table & xy_ff_table {}
+	}
+}
+
+
+
+# bit_3=0 && JJJ=1 -> B
+# bit_3=1 && JJJ=1 -> A
+# JJJ=2 -> X
+# JJJ=3 -> Y
+# JJJ=4 -> X0
+# JJJ=5 -> Y0
+# JJJ=6 -> X1
+# JJJ=7 -> Y1
+
+attach variables [jjj_56_bit_b] [_ B _ _ _ _ _ _];
+attach variables [jjj_56_bit_a] [_ A _ _ _ _ _ _];
+attach variables [jjj_48_bit]   [_ _ X Y _ _ _ _];
+attach variables [jjj_24_bit]   [_ _ _ _ X0 Y0 X1 Y1];
+
+jjj: jjj_56_bit_b is bit_3=0 & bits_4_6=1 & jjj_56_bit_b  {export *:7 jjj_56_bit_b;}
+jjj: jjj_56_bit_a is bit_3=1 & bits_4_6=1 & jjj_56_bit_a  {export *:7 jjj_56_bit_a;}
+
+jjj: jjj_48_bit is jjj_48_bit & bits_4_6=2 {export *:7 jjj_48_bit;}
+jjj: jjj_48_bit is jjj_48_bit & bits_4_6=3 {export *:7 jjj_48_bit;}
+
+jjj: jjj_24_bit is jjj_24_bit & bits_4_6=4 {export *:7 jjj_24_bit;}
+jjj: jjj_24_bit is jjj_24_bit & bits_4_6=5 {export *:7 jjj_24_bit;}
+jjj: jjj_24_bit is jjj_24_bit & bits_4_6=6 {export *:7 jjj_24_bit;}
+jjj: jjj_24_bit is jjj_24_bit & bits_4_6=7 {export *:7 jjj_24_bit;}
+
+attach variables [source_jjj_56_bit_b] [B _ _ _ _ _ _ _];
+attach variables [source_jjj_56_bit_a] [A _ _ _ _ _ _ _];
+attach variables [source_jjj_24_bit]   [_ _ _ _ X0 Y0 X1 Y1];
+
+source_jjj: source_jjj_56_bit_b is bit_3=0 & bits_4_6=0 & source_jjj_56_bit_b  {export *:7 source_jjj_56_bit_b;}
+source_jjj: source_jjj_56_bit_a is bit_3=1 & bits_4_6=0 & source_jjj_56_bit_a  {export *:7 source_jjj_56_bit_a;}
+
+source_jjj: source_jjj_24_bit is source_jjj_24_bit & bits_4_6=4 {export *:7 source_jjj_24_bit;}
+source_jjj: source_jjj_24_bit is source_jjj_24_bit & bits_4_6=5 {export *:7 source_jjj_24_bit;}
+source_jjj: source_jjj_24_bit is source_jjj_24_bit & bits_4_6=6 {export *:7 source_jjj_24_bit;}
+source_jjj: source_jjj_24_bit is source_jjj_24_bit & bits_4_6=7 {export *:7 source_jjj_24_bit;}
+
+attach variables [bits_4_6_QQQ_op1] [X0 Y0 X1 Y1 X0 Y0 X1 Y1];
+attach variables [bits_4_6_QQQ_op2] [X0 Y0 X0 Y0 Y1 X0 Y0 X1];
+
+plus_minus: + is bit_2_k=0 {}
+plus_minus: - is bit_2_k=1 {}
+
+attach variables [addl_s] [B A];
+attach variables [addl_d] [A B];
+
+attach variables [and_jj bits_4_5_qq] [X0 Y0 X1 Y1];
+attach variables [and_d] [A B];
+
+attach variables [bits_1_3_sss] [_ _ A1 B1 X0 Y0 X1 Y1];
+
+ 
+#imm_ssss: val is bits_8_11 [val=(1 << (23 - bits_8_11));] {export val;} 
+
+
+
+
+
+#############################
+#  Arithmetic Instructions  #
+#############################
+
+
+# ADC S,D = Add Long with Carry
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 1 J d 0 0 1
+# Optional Effective Address Extension
+:adc j","dst_3 is bits_5_7=1 & bits_0_2=1 & dst_3 & j
+{
+}
+
+
+# ADD #xx,D = Add
+# 23            16 15            8 7             0
+# 0 0 0 0 0 0 0 1  0 1 i i i i i i 1 0 0 0 d 0 0 0
+:add add_iiiiii","dst_3 is bits_14_23=0x5 & bits_0_2=0 & bits_4_7=0x8 & dst_3 & add_iiiiii
+{
+	dst_3 = dst_3 + add_iiiiii;
+}
+
+
+# ADD #xxxxxx,D = Add
+# 23            16 15            8 7             0
+# 0 0 0 0 0 0 0 1  0 1 0 0 0 0 0 0 1 1 0 0 d 0 0 0
+# Immediate Data Extension
+:add imm24","dst_3 is bits_4_23=0x140C & bits_0_2=0 & dst_3 ; imm24
+{
+	dst_3 = dst_3 + imm24;
+}
+
+
+
+# AND #xx,D = Logical AND
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 1 i i i i i i 1 0 0 0 d 1 1 0
+:and and_iiiiii","and_d is (bits_14_23=0x5 & bits_4_7=0x8 & bits_0_2=0x6) & and_iiiiii & and_d
+{
+	
+}
+
+
+# AND #xxxxxx,D = Add
+# 23            16 15            8 7             0
+# 0 0 0 0 0 0 0 1  0 1 0 0 0 0 0 0 1 1 0 0 d 1 1 0
+# Immediate Data Extension
+:add imm24","dst_3 is bits_4_23=0x140C & bits_0_2=0x6 & dst_3 ; imm24
+{
+	
+}
+
+attach variables [andi_EE] [MR CCR COM EOM];
+
+
+# ANDI #xx,D = Add
+# 23            16 15            8 7             0
+# 0 0 0 0 0 0 0 0  i i i i i i i i 1 0 1 1 1 0 E E
+# Immediate Data Extension
+:andi andi_iiiiiiii","andi_EE is bits_16_23=0 & bits_2_7=0x2E & andi_iiiiiiii & andi_EE
+{
+	
+}
+
+
+
+
+
+attach variables [asl_S] [A B];
+attach variables [asl_D] [A B];
+
+# ASL #ii,S2,D = Arithmetic Shift Accumulator Left
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 0 1 S i i i i i i D
+:asl asl_iiiiii","asl_S","asl_D is (bits_8_23=0xC1D) & asl_S & asl_D & asl_iiiiii
+{
+	
+}
+
+attach variables [asl_S2] [A B];
+
+# X0 = 4
+# X1 = 6
+# Y0 = 5
+# Y1 = 7
+# A1 = 2
+# B1 = 3
+
+attach variables [asl_sss] [_ _ A1 B1 X0 Y0 X1 Y1];
+
+# ASL S1,S2,D = Arithmetic Shift Accumulator Left
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 1 0 0 1 0 S s s s D
+:asl asl_sss","asl_S2","asl_D is (bits_5_23=0x60F2) & asl_sss & asl_S2 & asl_D
+{
+	
+}
+
+
+
+
+
+
+
+# ASR #ii,S2,D = Arithmetic Shift Accumulator Right
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 0 0 S i i i i i i D
+:asr asl_iiiiii","asl_S","asl_D is (bits_8_23=0xC1C) & asl_S & asl_D & asl_iiiiii
+{
+	
+}
+
+
+# ASR S1,S2,D = Arithmetic Shift Accumulator Right
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 1 0 0 1 1 S s s s D
+:asr asl_sss","asl_S2","asl_D is (bits_5_23=0x60F3) & asl_sss & asl_S2 & asl_D
+{
+	
+}
+
+
+
+bcc_12_15_condition: "cc" is bits_12_15=0 {}
+bcc_12_15_condition: "ge" is bits_12_15=1 {}
+bcc_12_15_condition: "ne" is bits_12_15=2 {}
+bcc_12_15_condition: "pl" is bits_12_15=3 {}
+bcc_12_15_condition: "nn" is bits_12_15=4 {}
+bcc_12_15_condition: "ec" is bits_12_15=5 {}
+bcc_12_15_condition: "lc" is bits_12_15=6 {}
+bcc_12_15_condition: "gt" is bits_12_15=7 {}
+bcc_12_15_condition: "cs" is bits_12_15=8 {}
+bcc_12_15_condition: "lt" is bits_12_15=9 {}
+bcc_12_15_condition: "eq" is bits_12_15=10 {}
+bcc_12_15_condition: "mi" is bits_12_15=11 {}
+bcc_12_15_condition: "nr" is bits_12_15=12 {}
+bcc_12_15_condition: "es" is bits_12_15=13 {}
+bcc_12_15_condition: "ls" is bits_12_15=14 {}
+bcc_12_15_condition: "le" is bits_12_15=15 {}
+
+
+bcc_0_3_condition: "cc" is bits_0_3=0 {}
+bcc_0_3_condition: "ge" is bits_0_3=1 {}
+bcc_0_3_condition: "ne" is bits_0_3=2 {}
+bcc_0_3_condition: "pl" is bits_0_3=3 {}
+bcc_0_3_condition: "nn" is bits_0_3=4 {}
+bcc_0_3_condition: "ec" is bits_0_3=5 {}
+bcc_0_3_condition: "lc" is bits_0_3=6 {}
+bcc_0_3_condition: "gt" is bits_0_3=7 {}
+bcc_0_3_condition: "cs" is bits_0_3=8 {}
+bcc_0_3_condition: "lt" is bits_0_3=9 {}
+bcc_0_3_condition: "eq" is bits_0_3=10 {}
+bcc_0_3_condition: "mi" is bits_0_3=11 {}
+bcc_0_3_condition: "nr" is bits_0_3=12 {}
+bcc_0_3_condition: "es" is bits_0_3=13 {}
+bcc_0_3_condition: "ls" is bits_0_3=14 {}
+bcc_0_3_condition: "le" is bits_0_3=15 {}
+
+
+
+
+dest24: rel is imm24 [ rel = inst_start / 3 + imm24; ] {
+    export *[p]:3 rel;
+}
+
+
+# Bcc xxxx = Branch Conditionally
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 0 0 0 0 0 1 0 0 C C C C
+# PC Relative Displacement
+:b^bcc_0_3_condition dest24 is bits_4_23=0xD104 & bcc_0_3_condition; imm24 & dest24
+{
+}
+
+
+
+
+
+
+dest: rel is bcc_aaaaa & bcc_aaaa [ rel = inst_start + bcc_aaaaa + (bcc_aaaa<<5); ] {
+    export *[p] rel;
+}
+
+
+# Bcc xxx = Branch Conditionally
+# 23              15              7             0
+# 0 0 0 0 0 1 0 1 C C C C 0 1 a a a a 0 a a a a a
+:b^bcc_12_15_condition dest is bits_16_23=0x5 & bits_10_11=1 & bit_5=0 & bcc_12_15_condition & dest
+{
+	
+}
+
+
+attach variables [bcc_rn] [R0 R1 R2 R3 R4 R5 R6 R7];
+
+
+# Bcc Rn = Branch Conditionally
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 1 R R R 0 1 0 0 C C C C
+:b^bcc_0_3_condition bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x4 & bcc_0_3_condition & bcc_rn
+{
+	
+}
+
+
+
+#EA Mode             MMMRRR
+#(Rn)-Nn             0 0 0 r r r
+#(Rn)+Nn             0 0 1 r r r
+#(Rn)-               0 1 0 r r r
+#(Rn)+               0 1 1 r r r
+#(Rn)                1 0 0 r r r
+#(Rn+Nn)             1 0 1 r r r
+#-(Rn)               1 1 1 r r r
+#Absolute address    1 1 0 0 0 0
+#Immediate data      1 1 0 1 0 0
+
+#"rrr" refers to an address register R0-R7
+
+attach variables [bchg_S] [X Y];
+
+bchg_ea: "(R0)-N0"  is bits_11_13=0b000 & bits_8_10=0 {}
+bchg_ea: "(R1)-N1"  is bits_11_13=0b000 & bits_8_10=1 {}
+bchg_ea: "(R2)-N2"  is bits_11_13=0b000 & bits_8_10=2 {}
+bchg_ea: "(R3)-N3"  is bits_11_13=0b000 & bits_8_10=3 {}
+bchg_ea: "(R4)-N4"  is bits_11_13=0b000 & bits_8_10=4 {}
+bchg_ea: "(R5)-N5"  is bits_11_13=0b000 & bits_8_10=5 {}
+bchg_ea: "(R6)-N6"  is bits_11_13=0b000 & bits_8_10=6 {}
+bchg_ea: "(R7)-N7"  is bits_11_13=0b000 & bits_8_10=7 {}
+
+bchg_ea: "(R0)+N0"  is bits_11_13=0b001 & bits_8_10=0 {}
+bchg_ea: "(R1)+N1"  is bits_11_13=0b001 & bits_8_10=1 {}
+bchg_ea: "(R2)+N2"  is bits_11_13=0b001 & bits_8_10=2 {}
+bchg_ea: "(R3)+N3"  is bits_11_13=0b001 & bits_8_10=3 {}
+bchg_ea: "(R4)+N4"  is bits_11_13=0b001 & bits_8_10=4 {}
+bchg_ea: "(R5)+N5"  is bits_11_13=0b001 & bits_8_10=5 {}
+bchg_ea: "(R6)+N6"  is bits_11_13=0b001 & bits_8_10=6 {}
+bchg_ea: "(R7)+N7"  is bits_11_13=0b001 & bits_8_10=7 {}
+
+bchg_ea: "(R0)-"    is bits_11_13=0b010 & bits_8_10=0 {}
+bchg_ea: "(R1)-"    is bits_11_13=0b010 & bits_8_10=1 {}
+bchg_ea: "(R2)-"    is bits_11_13=0b010 & bits_8_10=2 {}
+bchg_ea: "(R3)-"    is bits_11_13=0b010 & bits_8_10=3 {}
+bchg_ea: "(R4)-"    is bits_11_13=0b010 & bits_8_10=4 {}
+bchg_ea: "(R5)-"    is bits_11_13=0b010 & bits_8_10=5 {}
+bchg_ea: "(R6)-"    is bits_11_13=0b010 & bits_8_10=6 {}
+bchg_ea: "(R7)-"    is bits_11_13=0b010 & bits_8_10=7 {}
+
+bchg_ea: "(R0)+"    is bits_11_13=0b011 & bits_8_10=0 {}
+bchg_ea: "(R1)+"    is bits_11_13=0b011 & bits_8_10=1 {}
+bchg_ea: "(R2)+"    is bits_11_13=0b011 & bits_8_10=2 {}
+bchg_ea: "(R3)+"    is bits_11_13=0b011 & bits_8_10=3 {}
+bchg_ea: "(R4)+"    is bits_11_13=0b011 & bits_8_10=4 {}
+bchg_ea: "(R5)+"    is bits_11_13=0b011 & bits_8_10=5 {}
+bchg_ea: "(R6)+"    is bits_11_13=0b011 & bits_8_10=6 {}
+bchg_ea: "(R7)+"    is bits_11_13=0b011 & bits_8_10=7 {}
+
+bchg_ea: "(R0)"     is bits_11_13=0b100 & bits_8_10=0 {}
+bchg_ea: "(R1)"     is bits_11_13=0b100 & bits_8_10=1 {}
+bchg_ea: "(R2)"     is bits_11_13=0b100 & bits_8_10=2 {}
+bchg_ea: "(R3)"     is bits_11_13=0b100 & bits_8_10=3 {}
+bchg_ea: "(R4)"     is bits_11_13=0b100 & bits_8_10=4 {}
+bchg_ea: "(R5)"     is bits_11_13=0b100 & bits_8_10=5 {}
+bchg_ea: "(R6)"     is bits_11_13=0b100 & bits_8_10=6 {}
+bchg_ea: "(R7)"     is bits_11_13=0b100 & bits_8_10=7 {}
+
+bchg_ea: "(R0+N0)"  is bits_11_13=0b101 & bits_8_10=0 {}
+bchg_ea: "(R1+N1)"  is bits_11_13=0b101 & bits_8_10=1 {}
+bchg_ea: "(R2+N2)"  is bits_11_13=0b101 & bits_8_10=2 {}
+bchg_ea: "(R3+N3)"  is bits_11_13=0b101 & bits_8_10=3 {}
+bchg_ea: "(R4+N4)"  is bits_11_13=0b101 & bits_8_10=4 {}
+bchg_ea: "(R5+N5)"  is bits_11_13=0b101 & bits_8_10=5 {}
+bchg_ea: "(R6+N6)"  is bits_11_13=0b101 & bits_8_10=6 {}
+bchg_ea: "(R7+N7)"  is bits_11_13=0b101 & bits_8_10=7 {}
+
+bchg_ea: "-(R0)"    is bits_11_13=0b111 & bits_8_10=0 {}
+bchg_ea: "-(R1)"    is bits_11_13=0b111 & bits_8_10=1 {}
+bchg_ea: "-(R2)"    is bits_11_13=0b111 & bits_8_10=2 {}
+bchg_ea: "-(R3)"    is bits_11_13=0b111 & bits_8_10=3 {}
+bchg_ea: "-(R4)"    is bits_11_13=0b111 & bits_8_10=4 {}
+bchg_ea: "-(R5)"    is bits_11_13=0b111 & bits_8_10=5 {}
+bchg_ea: "-(R6)"    is bits_11_13=0b111 & bits_8_10=6 {}
+bchg_ea: "-(R7)"    is bits_11_13=0b111 & bits_8_10=7 {}
+
+bchg_ea: "Absolute addr"  is bits_11_13=0b110 & bits_8_10=0b000 {}
+bchg_ea: "Immediate data" is bits_11_13=0b110 & bits_8_10=0b100 {}
+
+
+# BCHG #n,[X/Y]:ea = Bit Test and Change (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 0 1 M M M R R R 0 S 0 b b b b b
+:bchg "#"bbbbb,bchg_S:bchg_ea is (bits_14_23=0x2D & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_ea
+{
+	
+}
+
+# BCHG #n,[X/Y]:ea = Bit Test and Change (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 0 1 M M M R R R 0 S 0 b b b b b
+# Effective Address Extension
+:bchg "#"bbbbb,bchg_S:imm24 is (bits_14_23=0x2D & bits_11_13=0b110 & bits_8_10=0b000 & bit_7=0 & bit_5=0) & bbbbb & 
+                                                                                                            bchg_S; 
+                                                                                                            imm24
+{
+	
+}
+
+
+# BCHG #n,[X/Y]:aa = Bit Test and Change (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 0 0 a a a a a a 0 S 0 b b b b b
+:bchg "#"bbbbb,bchg_S:bchg_aa is (bits_14_23=0x2C & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_aa
+{
+	
+}
+
+
+dest_bchg_pp: rel is bchg_pp [ rel = bchg_pp + 0xFFFFC0; ] {
+    export *[p] rel;
+}
+
+# BCHG #n,[X/Y]:pp = Bit Test and Change (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 1 0 p p p p p p 0 S 0 b b b b b
+:bchg "#"bbbbb,bchg_S:dest_bchg_pp is (bits_14_23=0x2E & bit_7=0 & bit_5=0) & bbbbb & bchg_S & dest_bchg_pp
+{
+	
+}
+
+
+dest_bchg_qq: rel is bchg_qq [ rel = bchg_qq + 0xFFFF80; ] {
+    export *[p] rel;
+}
+
+# BCHG #n,[X/Y]:qq = Bit Test and Change (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 1 q q q q q q 0 S 0 b b b b b
+:bchg "#"bbbbb,bchg_S:dest_bchg_qq is (bits_14_23=0x5 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & dest_bchg_qq
+{
+	
+}
+
+
+
+# 1DD Encoding
+bchg_DDDDDD: "X0" is bits_11_13=0b000 & bits_8_10=0b100 {}
+bchg_DDDDDD: "X1" is bits_11_13=0b000 & bits_8_10=0b101 {}
+bchg_DDDDDD: "Y0" is bits_11_13=0b000 & bits_8_10=0b110 {}
+bchg_DDDDDD: "Y1" is bits_11_13=0b000 & bits_8_10=0b111 {}
+
+# DDD Encoding
+bchg_DDDDDD: "A0" is bits_11_13=0b001 & bits_8_10=0b000 {}
+bchg_DDDDDD: "B0" is bits_11_13=0b001 & bits_8_10=0b001 {}
+bchg_DDDDDD: "A2" is bits_11_13=0b001 & bits_8_10=0b010 {}
+bchg_DDDDDD: "B2" is bits_11_13=0b001 & bits_8_10=0b011 {}
+bchg_DDDDDD: "A1" is bits_11_13=0b001 & bits_8_10=0b100 {}
+bchg_DDDDDD: "B1" is bits_11_13=0b001 & bits_8_10=0b101 {}
+bchg_DDDDDD: "A"  is bits_11_13=0b001 & bits_8_10=0b110 {}
+bchg_DDDDDD: "B"  is bits_11_13=0b001 & bits_8_10=0b111 {}
+
+# TTT Encoding
+bchg_DDDDDD: "R0" is bits_11_13=0b010 & bits_8_10=0b000 {}
+bchg_DDDDDD: "R1" is bits_11_13=0b010 & bits_8_10=0b001 {}
+bchg_DDDDDD: "R2" is bits_11_13=0b010 & bits_8_10=0b010 {}
+bchg_DDDDDD: "R3" is bits_11_13=0b010 & bits_8_10=0b011 {}
+bchg_DDDDDD: "R4" is bits_11_13=0b010 & bits_8_10=0b100 {}
+bchg_DDDDDD: "R5" is bits_11_13=0b010 & bits_8_10=0b101 {}
+bchg_DDDDDD: "R6" is bits_11_13=0b010 & bits_8_10=0b110 {}
+bchg_DDDDDD: "R7" is bits_11_13=0b010 & bits_8_10=0b111 {}
+
+# NNN Encoding
+bchg_DDDDDD: "N0" is bits_11_13=0b011 & bits_8_10=0b000 {}
+bchg_DDDDDD: "N1" is bits_11_13=0b011 & bits_8_10=0b001 {}
+bchg_DDDDDD: "N2" is bits_11_13=0b011 & bits_8_10=0b010 {}
+bchg_DDDDDD: "N3" is bits_11_13=0b011 & bits_8_10=0b011 {}
+bchg_DDDDDD: "N4" is bits_11_13=0b011 & bits_8_10=0b100 {}
+bchg_DDDDDD: "N5" is bits_11_13=0b011 & bits_8_10=0b101 {}
+bchg_DDDDDD: "N6" is bits_11_13=0b011 & bits_8_10=0b110 {}
+bchg_DDDDDD: "N7" is bits_11_13=0b011 & bits_8_10=0b111 {}
+
+# FFF Encoding
+bchg_DDDDDD: "M0" is bits_11_13=0b100 & bits_8_10=0b000 {}
+bchg_DDDDDD: "M1" is bits_11_13=0b100 & bits_8_10=0b001 {}
+bchg_DDDDDD: "M2" is bits_11_13=0b100 & bits_8_10=0b010 {}
+bchg_DDDDDD: "M3" is bits_11_13=0b100 & bits_8_10=0b011 {}
+bchg_DDDDDD: "M4" is bits_11_13=0b100 & bits_8_10=0b100 {}
+bchg_DDDDDD: "M5" is bits_11_13=0b100 & bits_8_10=0b101 {}
+bchg_DDDDDD: "M6" is bits_11_13=0b100 & bits_8_10=0b110 {}
+bchg_DDDDDD: "M7" is bits_11_13=0b100 & bits_8_10=0b111 {}
+
+# EEE Encoding
+bchg_DDDDDD: "EP" is bits_11_13=0b101 & bits_8_10=0b010 {}
+
+# VVV Encoding
+bchg_DDDDDD: "VBA" is bits_11_13=0b110 & bits_8_10=0b000 {}
+bchg_DDDDDD: "SC"  is bits_11_13=0b110 & bits_8_10=0b001 {}
+
+# GGG Encoding
+bchg_DDDDDD: "SZ"  is bits_11_13=0b111 & bits_8_10=0b000 {}
+bchg_DDDDDD: "SR"  is bits_11_13=0b111 & bits_8_10=0b001 {}
+bchg_DDDDDD: "OMR" is bits_11_13=0b111 & bits_8_10=0b010 {}
+bchg_DDDDDD: "SP"  is bits_11_13=0b111 & bits_8_10=0b011 {}
+bchg_DDDDDD: "SSH" is bits_11_13=0b111 & bits_8_10=0b100 {}
+bchg_DDDDDD: "SSL" is bits_11_13=0b111 & bits_8_10=0b101 {}
+bchg_DDDDDD: "LA"  is bits_11_13=0b111 & bits_8_10=0b110 {}
+bchg_DDDDDD: "LC"  is bits_11_13=0b111 & bits_8_10=0b111 {}
+
+
+
+
+
+
+# BCHG #n,D = Bit Test and Change (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 1 1 D D D D D D 0 1 0 b b b b b
+:bchg "#"bbbbb,bchg_DDDDDD is (bits_14_23=0x2F & bit_7=0 & bit_6=1 & bit_5=0) & bbbbb & bchg_DDDDDD
+{
+	
+}
+
+
+
+
+
+# BCLR #n,[X/Y]:ea = Bit Test and Clear (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 1 M M M R R R 0 S 0 b b b b b
+:bclr "#"bbbbb,bchg_S:bchg_ea is (bits_14_23=0x29 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_ea
+{
+	
+}
+
+
+# BCLR #n,[X/Y]:ea = Bit Test and Clear (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 1 M M M R R R 0 S 0 b b b b b
+# Effective Address Extension
+:bclr "#"bbbbb,bchg_S:imm24 is (bits_14_23=0x29 & bits_11_13=0b110 & bits_8_10=0b000 & bit_7=0 & bit_5=0) & bbbbb & 
+                                                                                                            bchg_S; 
+                                                                                                            imm24
+{
+	
+}
+
+
+# BCLR #n,[X/Y]:aa = Bit Test and Clear (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 0 a a a a a a 0 S 0 b b b b b
+:bclr "#"bbbbb,bchg_S:bchg_aa is (bits_14_23=0x28 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_aa
+{
+	
+}
+
+
+# BCLR #n,[X/Y]:pp = Bit Test and Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 1 0 p p p p p p 0 S 0 b b b b b
+:bclr "#"bbbbb,bchg_S:dest_bchg_pp is (bits_14_23=0x2A & bit_7=0 & bit_5=0) & bbbbb & bchg_S & dest_bchg_pp
+{
+	
+}
+
+
+# BCLR #n,[X/Y]:qq = Bit Test and Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 0 q q q q q q 0 S 0 b b b b b
+:bclr "#"bbbbb,bchg_S:dest_bchg_qq is (bits_14_23=0x4 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & dest_bchg_qq
+{
+	
+}
+
+
+# BCLR #n,D = Bit Test and Clear (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 1 1 D D D D D D 0 1 0 b b b b b
+:bclr "#"bbbbb,bchg_DDDDDD is (bits_14_23=0x2B & bit_7=0 & bit_6=1 & bit_5=0) & bbbbb & bchg_DDDDDD
+{
+	
+}
+
+
+# dest24: rel is imm24 [ rel = inst_start + imm24; ] 
+
+
+# BRA xxxx = Branch Always
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 0 0 0 0 1 1 0 0 0 0 0 0
+# PC Relative Displacement
+:bra dest24 is (op=0xD10C0); imm24 & dest24
+{
+	
+}
+
+# BRA xxx = Branch Always
+# 23              15              7             0
+# 0 0 0 0 0 1 0 1 0 0 0 0 1 1 a a a a 0 a a a a a
+:bra dest is bits_10_23=0x143 & bit_5=0 & dest
+{
+	
+}
+
+# BRA Rn = Branch Always
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 1 R R R 1 1 0 0 0 0 0 0
+:bra bcc_rn is bits_11_23=0x1A3 & bits_0_7=0xC0 & bcc_rn
+{
+
+}
+
+
+
+
+
+
+# BRCLR #n,[X/Y]:ea,xxxx = Branch If Bit Clear (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 0 M M M R R R 0 S 0 b b b b b
+# PC Relative Displacement
+:brclr "#"bbbbb,bchg_S:bchg_ea,dest24 is (bits_14_23=0x32 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_ea ; imm24 & dest24
+{
+	
+}
+
+
+# BRCLR #n,[X/Y]:aa,xxxx = Branch If Bit Clear (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 0 a a a a a a 1 S 0 b b b b b
+# PC Relative Displacement
+:brclr "#"bbbbb,bchg_S:bchg_aa,dest24 is (bits_14_23=0x32 & bit_7=1 & bit_5=0) & bbbbb & bchg_S & bchg_aa ; imm24 & dest24
+{
+	
+}
+
+
+# BRCLR #n,[X/Y]:pp,xxxx = Branch If Bit Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 1 p p p p p p 0 S 0 b b b b b
+# PC Relative Displacement
+:brclr "#"bbbbb,bchg_S:dest_bchg_pp,dest24 is (bits_14_23=0x33 & bit_7=0 & bit_5=0) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_pp; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BRCLR #n,[X/Y]:qq,xxxx = Branch If Bit Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 1 0 0 1 0 q q q q q q 0 S 0 b b b b b
+# PC Relative Displacement
+:brclr "#"bbbbb,bchg_S:dest_bchg_qq,dest24 is (bits_14_23=0x12 & bit_7=0 & bit_5=0) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_qq; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BRCLR #n,D,xxxx = Branch If Bit Clear (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 1 D D D D D D 1 0 0 b b b b b
+# PC Relative Displacement
+:brclr "#"bbbbb,bchg_DDDDDD,dest24 is (bits_14_23=0x33 & bit_7=1 & bit_6=0 & bit_5=0) & bbbbb & bchg_DDDDDD ; imm24 & dest24
+{
+	
+}
+
+
+
+
+# BRKcc = Exit Current Do Loop Conditionally
+# 23              15              7             0
+# 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 C C C C
+:brkcc is (bits_4_23=0x21 & bits_0_3=0) 
+{
+	
+}
+
+:brkge is (bits_4_23=0x21 & bits_0_3=1) 
+{
+	
+}
+
+:brkne is (bits_4_23=0x21 & bits_0_3=2) 
+{
+	
+}
+
+:brkpl is (bits_4_23=0x21 & bits_0_3=3) 
+{
+	
+}
+
+:brknn is (bits_4_23=0x21 & bits_0_3=4) 
+{
+	
+}
+
+:brkec is (bits_4_23=0x21 & bits_0_3=5) 
+{
+	
+}
+
+:brklc is (bits_4_23=0x21 & bits_0_3=6) 
+{
+	
+}
+
+:brkgt is (bits_4_23=0x21 & bits_0_3=7) 
+{
+	
+}
+
+:brkcs is (bits_4_23=0x21 & bits_0_3=8) 
+{
+	
+}
+
+:brklt is (bits_4_23=0x21 & bits_0_3=9) 
+{
+	
+}
+
+:brkeq is (bits_4_23=0x21 & bits_0_3=10)
+{
+	
+}
+
+:brkmi is (bits_4_23=0x21 & bits_0_3=11)
+{
+	
+}
+
+:brknr is (bits_4_23=0x21 & bits_0_3=12)
+{
+	
+}
+
+:brkes is (bits_4_23=0x21 & bits_0_3=13)
+{
+	
+}
+
+:brkls is (bits_4_23=0x21 & bits_0_3=14)
+{
+	
+}
+
+:brkle is (bits_4_23=0x21 & bits_0_3=15)
+{
+	
+}
+
+
+
+# BRSET #n,[X/Y]:ea,xxxx = Branch If Bit Set (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 0 M M M R R R 0 S 1 b b b b b
+# PC Relative Displacement
+:brset "#"bbbbb,bchg_S:bchg_ea,dest24 is (bits_14_23=0x32 & bit_7=0 & bit_5=1) & bbbbb & 
+                                                                                 bchg_S & 
+                                                                                 bchg_ea; 
+                                                                                 imm24 & 
+                                                                                 dest24
+{
+	
+}
+
+
+# BRSET #n,[X/Y]:aa,xxxx = Branch If Bit Set (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 0 a a a a a a 1 S 1 b b b b b
+# PC Relative Displacement
+:brset "#"bbbbb,bchg_S:bchg_aa,dest24 is (bits_14_23=0x32 & bit_7=1 & bit_5=1) & bbbbb & 
+                                                                                 bchg_S & 
+                                                                                 bchg_aa; 
+                                                                                 imm24 & 
+                                                                                 dest24
+{
+	
+}
+
+
+# BRSET #n,[X/Y]:pp,xxxx = Branch If Bit Set (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 1 p p p p p p 0 S 1 b b b b b
+# PC Relative Displacement
+:brset "#"bbbbb,bchg_S:dest_bchg_pp,dest24 is (bits_14_23=0x33 & bit_7=0 & bit_5=1) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_pp; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BRSET #n,[X/Y]:qq,xxxx = Branch If Bit Set (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 1 0 0 1 0 q q q q q q 0 S 1 b b b b b
+# PC Relative Displacement
+:brset "#"bbbbb,bchg_S:dest_bchg_qq,dest24 is (bits_14_23=0x12 & bit_7=0 & bit_5=1) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_qq; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BRSET #n,D,xxxx = Branch If Bit Set (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 1 1 D D D D D D 1 0 1 b b b b b
+# PC Relative Displacement
+:brset "#"bbbbb,bchg_DDDDDD,dest24 is (bits_14_23=0x33 & bit_7=1 & bit_6=0 & bit_5=1) & bbbbb & bchg_DDDDDD ; imm24 & dest24
+{
+	
+}
+
+
+
+# BScc xxxx = Branch to Subroutine Conditionally
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 C C C C
+# PC Relative Displacement
+:bscc dest24 is bits_4_23=0xD100 & bits_0_3=0; imm24 & dest24
+{
+	
+}
+
+:bsge dest24 is bits_4_23=0xD100 & bits_0_3=1; imm24 & dest24
+{
+	
+}
+
+:bsne dest24 is bits_4_23=0xD100 & bits_0_3=2; imm24 & dest24
+{
+	
+}
+
+:bspl dest24 is bits_4_23=0xD100 & bits_0_3=3; imm24 & dest24
+{
+	
+}
+
+:bsnn dest24 is bits_4_23=0xD100 & bits_0_3=4; imm24 & dest24
+{
+	
+}
+
+:bsec dest24 is bits_4_23=0xD100 & bits_0_3=5; imm24 & dest24
+{
+	
+}
+
+:bslc dest24 is bits_4_23=0xD100 & bits_0_3=6; imm24 & dest24
+{
+	
+}
+
+:bsgt dest24 is bits_4_23=0xD100 & bits_0_3=7; imm24 & dest24
+{
+	
+}
+
+:bscs dest24 is bits_4_23=0xD100 & bits_0_3=8; imm24 & dest24
+{
+	
+}
+
+:bslt dest24 is bits_4_23=0xD100 & bits_0_3=9; imm24 & dest24
+{
+	
+}
+
+:bseq dest24 is bits_4_23=0xD100 & bits_0_3=10; imm24 & dest24
+{
+	
+}
+
+:bsmi dest24 is bits_4_23=0xD100 & bits_0_3=11; imm24 & dest24
+{
+	
+}
+
+:bsnr dest24 is bits_4_23=0xD100 & bits_0_3=12; imm24 & dest24
+{
+	
+}
+
+:bses dest24 is bits_4_23=0xD100 & bits_0_3=13; imm24 & dest24
+{
+	
+}
+
+:bsls dest24 is bits_4_23=0xD100 & bits_0_3=14; imm24 & dest24
+{
+	
+}
+
+:bsle dest24 is bits_4_23=0xD100 & bits_0_3=15; imm24 & dest24
+{
+	
+}
+
+
+
+
+# BScc xxx = Branch to Subroutine Conditionally
+# 23              15              7             0
+# 0 0 0 0 0 1 0 1 C C C C 0 0 a a a a 0 a a a a a
+:bscc dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=0 & dest
+{
+	
+}
+
+:bsge dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=1 & dest
+{
+	
+}
+
+:bsne dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=2 & dest
+{
+	
+}
+
+:bspl dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=3 & dest
+{
+	
+}
+
+:bsnn dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=4 & dest
+{
+	
+}
+
+:bsec dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=5 & dest
+{
+	
+}
+
+:bslc dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=6 & dest
+{
+	
+}
+
+:bsgt dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=7 & dest
+{
+	
+}
+
+:bscs dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=8 & dest
+{
+	
+}
+
+:bslt dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=9 & dest
+{
+	
+}
+
+:bseq dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=10 & dest
+{
+	
+}
+
+:bsmi dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=11 & dest
+{
+	
+}
+
+:bsnr dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=12 & dest
+{
+	
+}
+
+:bses dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=13 & dest
+{
+	
+}
+
+:bsls dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=14 & dest
+{
+	
+}
+
+:bsle dest is bits_16_23=0x5 & bits_10_11=0 & bit_5=0 & bits_12_15=15 & dest
+{
+	
+}
+
+
+
+
+# BScc Rn = Branch to Subroutine Conditionally
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 1 R R R 0 0 0 0 C C C C
+:bscc bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=0 & bcc_rn
+{
+	
+}
+
+:bsge bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=1 & bcc_rn
+{
+	
+}
+
+:bsne bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=2 & bcc_rn
+{
+	
+}
+
+:bspl bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=3 & bcc_rn
+{
+	
+}
+
+:bsnn bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=4 & bcc_rn
+{
+	
+}
+
+:bsec bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=5 & bcc_rn
+{
+	
+}
+
+:bslc bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=6 & bcc_rn
+{
+	
+}
+
+:bsgt bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=7 & bcc_rn
+{
+	
+}
+
+:bscs bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=8 & bcc_rn
+{
+	
+}
+
+:bslt bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=9 & bcc_rn
+{
+	
+}
+
+:bseq bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=10 & bcc_rn
+{
+	
+}
+
+:bsmi bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=11 & bcc_rn
+{
+	
+}
+
+:bsnr bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=12 & bcc_rn
+{
+	
+}
+
+:bses bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=13 & bcc_rn
+{
+	
+}
+
+:bsls bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=14 & bcc_rn
+{
+	
+}
+
+:bsle bcc_rn is bits_11_23=0x1A3 & bits_4_7=0x0 & bits_0_3=15 & bcc_rn
+{
+	
+}
+
+
+
+
+
+
+
+
+
+
+# BSCLR #n,[X/Y]:ea,xxxx = Branch to Subroutine if Bit Clear (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 0 M M M R R R 0 S 0 b b b b b
+# PC Relative Displacement
+:bsclr "#"bbbbb,bchg_S:bchg_ea,dest24 is (bits_14_23=0x36 & bit_7=0 & bit_5=0) & bbbbb & bchg_S & bchg_ea; imm24 & dest24
+{
+	
+}
+
+
+# BSCLR #n,[X/Y]:aa,xxxx = Branch to Subroutine if Bit Clear (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 0 a a a a a a 1 S 0 b b b b b
+# PC Relative Displacement
+:bsclr "#"bbbbb,bchg_S:bchg_aa,dest24 is (bits_14_23=0x36 & bit_7=1 & bit_5=0) & bbbbb & bchg_S & bchg_aa ; imm24 & dest24
+{
+	
+}
+
+
+# BSCLR #n,[X/Y]:pp,xxxx = Branch to Subroutine if Bit Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 1 p p p p p p 0 S 0 b b b b b
+# PC Relative Displacement
+:bsclr "#"bbbbb,bchg_S:dest_bchg_pp,dest24 is (bits_14_23=0x37 & bit_7=0 & bit_5=0) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_pp; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BSCLR #n,[X/Y]:qq,xxxx = Branch to Subroutine if Bit Clear (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 1 0 0 1 0 q q q q q q 1 S 0 b b b b b
+# PC Relative Displacement
+:bsclr "#"bbbbb,bchg_S:dest_bchg_qq,dest24 is (bits_14_23=0x12 & bit_7=1 & bit_5=0) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_qq; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+	
+}
+
+
+# BSCLR #n,S,xxxx = Branch to Subroutine if Bit Clear (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 1 D D D D D D 1 0 0 b b b b b
+# PC Relative Displacement
+:bsclr "#"bbbbb,bchg_DDDDDD,dest24 is (bits_14_23=0x37 & bit_7=1 & bit_6=0 & bit_5=0) & bbbbb & 
+                                                                                        bchg_DDDDDD; 
+                                                                                        imm24 & 
+                                                                                        dest24
+{
+	
+}
+
+
+
+# BSET #n,[X/Y]:ea = Bit Test and Set (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 1 M M M R R R 0 S 1 b b b b b
+:bset "#"bbbbb,bchg_S:bchg_ea is (bits_14_23=0x29 & bit_7=0 & bit_5=1) & bbbbb & bchg_S & bchg_ea
+{
+	
+}
+
+
+# BSET #n,[X/Y]:ea = Bit Test and Set (Effective Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 1 M M M R R R 0 S 1 b b b b b
+# Effective Address Extension
+:bset "#"bbbbb,bchg_S:imm24 is (bits_14_23=0x29 & bits_11_13=0b110 & bits_8_10=0b000 & bit_7=0 & bit_5=1) & bbbbb & 
+                                                                                                            bchg_S; 
+                                                                                                            imm24
+{
+	
+}
+
+
+# BSET #n,[X/Y]:aa = Bit Test and Set (Absolute Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 0 0 a a a a a a 0 S 1 b b b b b
+:bset "#"bbbbb,bchg_S:bchg_aa is (bits_14_23=0x28 & bit_7=0 & bit_5=1) & bbbbb & bchg_S & bchg_aa
+{
+	
+}
+
+
+# BSET #n,[X/Y]:pp = Bit Test and Set (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 1 0 p p p p p p 0 S 1 b b b b b
+:bset "#"bbbbb,bchg_S:dest_bchg_pp is (bits_14_23=0x2A & bit_7=0 & bit_5=1) & bbbbb & bchg_S & dest_bchg_pp
+{
+	
+}
+
+
+# BSET #n,[X/Y]:qq = Bit Test and Set (I/O Short Address)
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 0 q q q q q q 0 S 1 b b b b b
+:bset "#"bbbbb,bchg_S:dest_bchg_qq is (bits_14_23=0x4 & bit_7=0 & bit_5=1) & bbbbb & bchg_S & dest_bchg_qq
+{
+	
+}
+
+
+# BSET #n,D = Bit Test and Set (Destination Register)
+# 23              15              7             0
+# 0 0 0 0 1 0 1 0 1 1 D D D D D D 0 1 1 b b b b b
+:bset "#"bbbbb,bchg_DDDDDD is (bits_14_23=0x2B & bit_7=0 & bit_6=1 & bit_5=1) & bbbbb & bchg_DDDDDD
+{
+	
+}
+
+
+
+
+
+
+# BSR xxxx = Branch to Subroutine
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0
+# PC Relative Displacement
+:bsr dest24 is op=0xD1080; imm24 & dest24
+{
+}
+
+
+# BSR xxx = Branch to Subroutine
+# 23              15              7             0
+# 0 0 0 0 0 1 0 1 0 0 0 0 1 0 a a a a 0 a a a a a
+:bsr dest is bits_10_23=0x142 & bit_5=0 & dest
+{
     
+}
+
+
+# BSR Rn = Branch to Subroutine
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 0 0 0 1 1 R R R 1 0 0 0 0 0 0 0
+:bsr bcc_rn is bits_11_23=0x1A3 & bits_0_7=0x80 & bcc_rn
+{
     
-##################
-#  Instructions  #
-##################
-
-
-#######################
-# Parallel Instructions
-#######################
-# Bits 23..20 = [xxxx] -> (where one or more x bit is set)
-
-# All Move instructions: Bits [7..0] == 0
-
-# Parallel move NOP
-:nop is (bits_0_7=0x0 & bits_8_23=0x2000)
-{
-}
-
-# Parallel move X: -> Y:
-:move_x_to_y is (bits_0_7=0x0 & bits_20_23!=0x0 & bit_23=0x1)
-{
-}
-
-# Parallel move X: or Y: ->
-:move_x_or_y sourcereg dddd is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_22_23=0x1 & bits_20_21!=0x0) &
-                                sourcereg & dddd
-{
-    # dddd Decode ALU register
-}
-
-# Parallel move L: ->
-:move_l is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_20_23=0x4)
-{
-}
-
-# Parallel move I:, R:, U: ->
-:move_iru is (bits_0_7=0x0 & bits_20_23!=0x0 & bits_21_23=0x1)
-{
 }
 
 
@@ -123,15 +2143,1044 @@ dddd: dd is op [dd = ( (op >> 16) & 0x7) | (( (op >> 16) & 0x30) >> 1); ] { expo
 
 
 
-###########################
-# Non-Parallel Instructions
-###########################
-# Bits 23..20 = [0000]
+# BSSET #n,[X/Y]:ea,xxxx = Branch to Subroutine if Bit Set
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 0 M M M R R R 0 S 1 b b b b b
+# PC Relative Displacement
+:bsset "#"bbbbb,bchg_S:bchg_ea,dest24 is (bits_14_23=0x36 & bit_7=0 & bit_5=1) & bbbbb & bchg_S & bchg_ea; imm24 & dest24
+{
+    
+}
 
-:move is (op=0x85E00 & bits_20_23=0x0)
+
+# BSSET #n,[X/Y]:aa,xxxx = Branch to Subroutine if Bit Set
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 0 a a a a a a 1 S 1 b b b b b
+# PC Relative Displacement
+:bsset "#"bbbbb,bchg_S:bchg_aa,dest24 is (bits_14_23=0x36 & bit_7=1 & bit_5=1) & bbbbb & bchg_S & bchg_aa ; imm24 & dest24
+{
+    
+}
+
+
+# BSSET #n,[X/Y]:pp,xxxx = Branch to Subroutine if Bit Set
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 1 p p p p p p 0 S 1 b b b b b
+# PC Relative Displacement
+:bsset "#"bbbbb,bchg_S:dest_bchg_pp,dest24 is (bits_14_23=0x37 & bit_7=0 & bit_5=1) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_pp; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+    
+}
+
+
+# BSSET #n,[X/Y]:qq,xxxx = Branch to Subroutine if Bit Set
+# 23              15              7             0
+# 0 0 0 0 0 1 0 0 1 0 q q q q q q 1 S 1 b b b b b
+# PC Relative Displacement
+:bsset "#"bbbbb,bchg_S:dest_bchg_qq,dest24 is (bits_14_23=0x12 & bit_7=1 & bit_5=1) & bbbbb & 
+                                                                                      bchg_S & 
+                                                                                      dest_bchg_qq; 
+                                                                                      imm24 & 
+                                                                                      dest24
+{
+    
+}
+
+
+# BSSET #n,S,xxxx = Branch to Subroutine if Bit Set
+# 23              15              7             0
+# 0 0 0 0 1 1 0 1 1 1 D D D D D D 1 0 1 b b b b b
+# PC Relative Displacement
+:bsset "#"bbbbb,bchg_DDDDDD,dest24 is (bits_14_23=0x37 & bit_7=1 & bit_6=0 & bit_5=1) & bbbbb & bchg_DDDDDD ; imm24 & dest24
+{
+    
+}
+
+
+
+
+
+
+# BTST #n,[X/Y]:ea = Bit Test
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 0 1 M M M R R R 0 S 1 b b b b b
+# Effective Address Extension
+:btst "#"bbbbb,bchg_S:eap is ((bits_14_23=0x2D & bit_7=0 & bit_5=1 & bit_4=0) & bbbbb & bchg_S) ... &  eap
+{
+    
+}
+
+
+# BTST #n,[X/Y]:aa = Bit Test
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 0 0 a a a a a a 0 S 1 b b b b b
+:btst "#"bbbbb,bchg_S:bchg_aa is (bits_14_23=0x2C & bit_7=0 & bit_5=1 & bit_4=0) & bbbbb & bchg_S & bchg_aa
+{
+    
+}
+
+
+# BTST #n,[X/Y]:pp = Bit Test
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 1 0 p p p p p p 0 S 1 b b b b b
+:btst "#"bbbbb,bchg_S:dest_bchg_pp is (bits_14_23=0x2E & bit_7=0 & bit_5=1 & bit_4=0) & bbbbb & bchg_S & dest_bchg_pp
+{
+    
+}
+
+
+# BTST #n,[X/Y]:qq = Bit Test
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 1 q q q q q q 0 S 1 b b b b b
+:btst "#"bbbbb,bchg_S:dest_bchg_qq is (bits_14_23=0x5 & bit_7=0 & bit_5=1 & bit_4=0) & bbbbb & bchg_S & dest_bchg_qq
+{
+    
+}
+
+
+# BTST #n,D = Bit Test
+# 23              15              7             0
+# 0 0 0 0 1 0 1 1 1 1 D D D D D D 0 1 1 b b b b b
+:btst "#"bbbbb,bchg_DDDDDD is (bits_14_23=0x2F & bit_7=0 & bit_6=1 & bit_5=1 & bit_4=0) & bbbbb & bchg_DDDDDD
+{
+    
+}
+
+
+
+
+
+
+
+attach variables [clb_s] [A B];
+attach variables [clb_d] [A B];
+
+
+# CLB S,D = Count Leading Bits
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 S D
+:clb clb_s","clb_d is bits_2_23=0x30780 & clb_s & clb_d
+{
+    
+}
+
+
+
+
+attach variables [clr_d] [A B];
+
+
+
+
+# CMP #xx, S2 = Compare
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 1 i i i i i i 1 0 0 0 d 1 0 1
+:cmp cmp_iiiiii","dst_3 is bits_0_2=0x5 & bits_4_7=0x8 & bits_14_23=0x5 & cmp_iiiiii & dst_3
+{
+    
+}
+
+
+# CMP #xxxxxx, S2 = Compare
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 d 1 0 1
+# Immediate Data Extension
+:cmp imm24","dst_3 is ((bits_0_2=0x5 & bits_4_23=0x140C) & dst_3) ; imm24
+{
+    
+}
+
+
+
+
+
+attach variables [cmpu_d]     [A B];
+
+
+
+
+attach variables [source_ggg_56_bit_b] [B _ _ _ _ _ _ _];
+attach variables [source_ggg_56_bit_a] [A _ _ _ _ _ _ _];
+attach variables [source_ggg_24_bit]   [_ _ _ _ X0 Y0 X1 Y1];
+
+source_ggg: source_ggg_56_bit_b is bit_0=0 & bits_1_3=0 & source_ggg_56_bit_b  {export *:7 source_ggg_56_bit_b;}
+source_ggg: source_ggg_56_bit_a is bit_0=1 & bits_1_3=0 & source_ggg_56_bit_a  {export *:7 source_ggg_56_bit_a;}
+
+source_ggg: source_ggg_24_bit is source_ggg_24_bit & bits_1_3=4 {export *:7 source_ggg_24_bit;}
+source_ggg: source_ggg_24_bit is source_ggg_24_bit & bits_1_3=5 {export *:7 source_ggg_24_bit;}
+source_ggg: source_ggg_24_bit is source_ggg_24_bit & bits_1_3=6 {export *:7 source_ggg_24_bit;}
+source_ggg: source_ggg_24_bit is source_ggg_24_bit & bits_1_3=7 {export *:7 source_ggg_24_bit;}
+
+
+
+
+
+
+
+# CMPU S1, S2 = Compare Unsigned
+# 23              15              7             0
+# 0 0 0 0 1 1 0 0 0 0 0 1 1 1 1 1 1 1 1 1 g g g d
+:cmpu source_ggg","cmpu_d is bits_4_23=0xC1FF & source_ggg & cmpu_d
+{
+    
+}
+
+
+
+
+# DEBUG = Enter Debug Mode
+# 23              15              7             0
+# 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
+:debug is op=0x200
+{
+    
+}
+
+
+bits_0_3_cccc: "cc" is bits_0_3=0 {}
+bits_0_3_cccc: "ge" is bits_0_3=1 {}
+bits_0_3_cccc: "ne" is bits_0_3=2 {}
+bits_0_3_cccc: "pl" is bits_0_3=3 {}
+bits_0_3_cccc: "nn" is bits_0_3=4 {}
+bits_0_3_cccc: "ec" is bits_0_3=5 {}
+bits_0_3_cccc: "lc" is bits_0_3=6 {}
+bits_0_3_cccc: "gt" is bits_0_3=7 {}
+bits_0_3_cccc: "cs" is bits_0_3=8 {}
+bits_0_3_cccc: "lt" is bits_0_3=9 {}
+bits_0_3_cccc: "eq" is bits_0_3=10 {}
+bits_0_3_cccc: "mi" is bits_0_3=11 {}
+bits_0_3_cccc: "nr" is bits_0_3=12 {}
+bits_0_3_cccc: "es" is bits_0_3=13 {}
+bits_0_3_cccc: "ls" is bits_0_3=14 {}
+bits_0_3_cccc: "le" is bits_0_3=15 {}
+
+
+# DEBUGcc = Enter Debug Mode Conditionally
+# 23              15              7             0
+# 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 C C C C
+:debugcc bcc_rn is bits_4_23=0x30 & bits_0_3=0 & bcc_rn
+{
+    
+}
+
+:debugge bcc_rn is bits_4_23=0x30 & bits_0_3=1 & bcc_rn
+{
+    
+}
+
+:debugne bcc_rn is bits_4_23=0x30 & bits_0_3=2 & bcc_rn
+{
+    
+}
+
+:debugpl bcc_rn is bits_4_23=0x30 & bits_0_3=3 & bcc_rn
+{
+    
+}
+
+:debugnn bcc_rn is bits_4_23=0x30 & bits_0_3=4 & bcc_rn
+{
+    
+}
+
+:debugec bcc_rn is bits_4_23=0x30 & bits_0_3=5 & bcc_rn
+{
+    
+}
+
+:debuglc bcc_rn is bits_4_23=0x30 & bits_0_3=6 & bcc_rn
+{
+    
+}
+
+:debuggt bcc_rn is bits_4_23=0x30 & bits_0_3=7 & bcc_rn
+{
+    
+}
+
+:debugcs bcc_rn is bits_4_23=0x30 & bits_0_3=8 & bcc_rn
+{
+    
+}
+
+:debuglt bcc_rn is bits_4_23=0x30 & bits_0_3=9 & bcc_rn
+{
+    
+}
+
+:debugeq bcc_rn is bits_4_23=0x30 & bits_0_3=10 & bcc_rn
+{
+    
+}
+
+:debugmi bcc_rn is bits_4_23=0x30 & bits_0_3=11 & bcc_rn
+{
+    
+}
+
+:debugnr bcc_rn is bits_4_23=0x30 & bits_0_3=12 & bcc_rn
+{
+    
+}
+
+:debuges bcc_rn is bits_4_23=0x30 & bits_0_3=13 & bcc_rn
+{
+    
+}
+
+:debugls bcc_rn is bits_4_23=0x30 & bits_0_3=14 & bcc_rn
+{
+    
+}
+
+:debugle bcc_rn is bits_4_23=0x30 & bits_0_3=15 & bcc_rn
+{
+    
+}
+
+
+# DEC = Decrement by One
+# 23              15              7             0
+# 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 d
+:dec dst_0 is bits_1_23=0x5 & dst_0
+{
+    dst_0 = dst_0 - 1;  
+}
+
+
+
+attach variables [div_jj] [X0 Y0 X1 Y1];
+
+
+# DIV S,D = Divide Iteration
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 J J d 0 0 0
+:div div_jj,dst_3 is bits_6_23=0x601 & bits_0_2=0 & div_jj & dst_3
+{
+    
+}
+
+
+# ss = 00
+# su = 10
+# uu = 11
+
+# qqqq
+
+# 0000 X0,X0 = 0
+# 0001 Y0,Y0 = 1
+# 0010 X1,X0 = 2
+# 0011 Y1,Y0 = 3
+# 1000 X1,X1 = 8
+# 1001 Y1,Y1 = 9
+# 1010 X0,X1 = 10
+# 1011 Y0,Y1 = 11
+
+# 0100 X0,Y1 = 4
+# 0101 Y0,X0 = 5
+# 0110 X1,Y0 = 6
+# 0111 Y1,X1 = 7
+# 1100 Y1,X0 = 12
+# 1101 X0,Y0 = 13
+# 1110 Y0,X1 = 14
+# 1111 X1,Y1 = 15
+
+
+qqqq_reg: "X0,X0" is bits_0_3=0  {}
+qqqq_reg: "Y0,Y0" is bits_0_3=1  {}
+qqqq_reg: "X1,X0" is bits_0_3=2  {}
+qqqq_reg: "Y1,Y0" is bits_0_3=3  {}
+qqqq_reg: "X1,X1" is bits_0_3=8  {}
+qqqq_reg: "Y1,Y1" is bits_0_3=9  {}
+qqqq_reg: "X0,X1" is bits_0_3=10 {}
+qqqq_reg: "Y0,Y1" is bits_0_3=11 {}
+
+qqqq_reg: "X0,Y1" is bits_0_3=4  {}
+qqqq_reg: "Y0,X0" is bits_0_3=5  {}
+qqqq_reg: "X1,Y0" is bits_0_3=6  {}
+qqqq_reg: "Y1,X1" is bits_0_3=7  {}
+qqqq_reg: "Y1,X0" is bits_0_3=12 {}
+qqqq_reg: "X0,Y0" is bits_0_3=13 {}
+qqqq_reg: "Y0,X1" is bits_0_3=14 {}
+qqqq_reg: "X1,Y1" is bits_0_3=15 {}
+
+
+
+
+attach variables [dmac_d] [A B];
+
+# k = 0 = +
+# k = 1 = -
+
+k_sign: "" is bit_4=0 {}
+k_sign: "-" is bit_4=1 {}
+
+
+# DMAC = Double Precision Multiply Accumulate with Right Shift
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 0 1 0 0 1 0 s 1 s d k Q Q Q Q
+:dmacss k_sign^qqqq_reg,dmac_d is bits_9_23=0x92 & bit_8=0 & bit_6=0 & k_sign & qqqq_reg & dmac_d
+{
+    
+}
+
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 0 1 0 0 1 0 s 1 s d k Q Q Q Q
+:dmacsu k_sign^qqqq_reg,dmac_d is bits_9_23=0x92 & bit_8=1 & bit_6=0 & k_sign & qqqq_reg & dmac_d
+{
+    
+}
+
+# 23              15              7             0
+# 0 0 0 0 0 0 0 1 0 0 1 0 0 1 0 s 1 s d k Q Q Q Q
+:dmacuu k_sign^qqqq_reg,dmac_d is bits_9_23=0x92 & bit_8=1 & bit_6=1 & k_sign & qqqq_reg & dmac_d
+{
+    
+}
+
+
+#ENDDO 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0
+:enddo is (op=0x4C) 
+{
+    
+}
+
+#INC D 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 d 
+:inc dst_0 is byte_1_2=0 & bits_1_7=4 & dst_0 
+{ 
+    dst_0 = dst_0 + 1;
+}
+
+#23 16 15 8 7 0
+#JSSET #n,[X or Y]:ea,xxxx 0 0 0 0 1 0 1 1 0 1 M M M R R R 1 S 1 0 b b b b
+#Absolute Address Extension
+#23 16 15 8 7 0
+#JSSET #n,[X or Y]:aa,xxxx 0 0 0 0 1 0 1 1 0 0 a a a a a a 1 S 1 0 b b b b
+#Absolute Address Extension
+#23 16 15 8 7 0
+#JSSET #n,[X or Y]:pp,xxxx 0 0 0 0 1 0 1 1 1 0 p p p p p p 1 S 1 0 b b b b
+#Absolute Address Extension
+#23 16 15 8 7 0
+#JSSET #n,[X or Y]:qq,xxxx 0 0 0 0 0 0 0 1 1 1 q q q q q q 1 S 1 0 b b b b
+#Absolute Address Extension
+#23 16 15 8 7 0
+#JSSET #n,S,xxxx 0 0 0 0 1 0 1 1 1 1 D D D D D D 0 0 1 0 b b b b
+
+#Absolute Address Extension
+with : (bits_20_23=0 & bit_18=0 & bit_16=1 & bits_4_5=2) ... { #JSSET
+    with : (bit_6_S=0) ... { #X Space
+        with : (bit_19=1 & bit_17=1 & bit_7=1) ... {
+            :jsset "#"bits_0_3_bbbb,eax,abs24 is (bits_14_15=1 & bits_0_3_bbbb)... & eax & abs24 
+                { 
+                    if ((eax & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+            :jsset "#"bits_0_3_bbbb,aaaaaax,abs24 is (bits_14_15=0 & bits_0_3_bbbb & aaaaaax)... & abs24 
+                {
+                    if ((aaaaaax & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+            :jsset "#"bits_0_3_bbbb,ppppppx,abs24 is (bits_14_15=2 & bits_0_3_bbbb & ppppppx)... & abs24 
+                {
+                    if ((ppppppx & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+        }
+        :jsset "#"bits_0_3_bbbb,qqqqqqx,abs24 is (bits_14_23=0x7 & bit_7=1 & bits_0_3_bbbb & qqqqqqx)... & abs24 
+            {
+                if ((qqqqqqx & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+            }
+    }
+    with : (bit_6_S=1) ... { #Y Space
+        with : (bit_19=1 & bit_17=1 & bit_7=1) ... {
+            :jsset "#"bits_0_3_bbbb,eay,abs24 is (bits_14_15=1 & bits_0_3_bbbb) ... & eay & abs24 
+                {
+                    if ((eay & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+            :jsset "#"bits_0_3_bbbb,aaaaaay,abs24 is (bits_14_15=0 & bits_0_3_bbbb & aaaaaay)... & abs24 
+                {
+                    if ((aaaaaay & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+            :jsset "#"bits_0_3_bbbb,ppppppy,abs24 is (bits_14_15=2 & bits_0_3_bbbb & ppppppy)... & abs24 
+                {
+                    if ((ppppppy & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+                }
+        }
+        :jsset "#"bits_0_3_bbbb,qqqqqqy,abs24 is (bits_14_23=0x7 & bit_7=1 & bits_0_3_bbbb & qqqqqqy)... & abs24 
+            {
+                if ((qqqqqqy & (1 << bits_0_3_bbbb)) >= 1) goto abs24;
+            }
+    }
+    :jsset "#"bits_0_3_bbbb,bits_8_13_DDDDDD,abs24 is (bits_14_23=0x2F & bits_4_7=2 & bits_0_3_bbbb & bits_8_13_DDDDDD) ... & abs24 
+        {
+            if ((bits_8_13_DDDDDD:3 & (1 << bits_0_3_bbbb)) >=1) goto abs24;
+        }
+}
+
+:lra bits_8_10r,bits_0_4_DDDDD is bits_11_23=0x98 & bits_5_7=0 & bits_8_10r & bits_0_4_DDDDD
+{
+    
+}
+
+:lra dest24,bits_0_4_DDDDD is (bits_5_23=0x2202 & bits_0_4_DDDDD); dest24
+{
+    
+}
+
+:lsl bits_1_5,dst_0 is bits_6_23=0x307A & bits_1_5 & dst_0
+{
+    
+}
+
+:lsl bits_1_3_sss,dst_0 is bits_4_23=0xC1E1 & bits_1_3_sss & dst_0
+{
+    
+}
+
+:lsr bits_1_3_sss,dst_0 is bits_4_23=0xC1E3 & bits_1_3_sss & dst_0
+{
+    
+}
+
+:lsr "#"bits_1_5,dst_0 is bits_6_23=0x307B & bits_1_5 & dst_0
+{
+    
+}
+
+:lua eap,bits_0_4_DDDDD is (bits_13_23=0x22 & bits_5_7=0 & bits_0_4_DDDDD) ... & eap
+{
+    
+}
+
+:lua (bits_8_10r + aaaaaaa_split_lua),bits_0_3_dddd is bits_14_23=0x10 & bits_8_10r & aaaaaaa_split_lua & bits_0_3_dddd
+{
+    
+}
+
+:mac plus_minus^bits_8_11_ssss,bits_4_5_qq,dst_3 is bits_12_23=0x10 & bits_6_7=3 & bits_0_1=2 & plus_minus &
+                                                                                                bits_8_11_ssss &
+                                                                                                bits_4_5_qq &
+                                                                                                dst_3
+{
+    
+}
+
+:maci plus_minus^imm24,bits_4_5_qq,dst_3 is bits_6_23=0x507 & bits_0_1=2 & plus_minus & bits_4_5_qq & dst_3; imm24
+{
+    
+}
+
+
+:mac^sign_unsign plus_minus_bit_4^bits_0_3_QQQQ_op1,bits_0_3_QQQQ_op2,dst_5 is bits_7_23=0x24D & sign_unsign & 
+                                                                                           plus_minus_bit_4 &
+                                                                                           bits_0_3_QQQQ_op1 &
+                                                                                           bits_0_3_QQQQ_op2 &
+                                                                                           dst_5
+{
+    
+}
+
+#TODO: MACR Format 2. DSP56300 Family Manual Rev. 5 has typo 0000000100003sss11QQdk11... Not sure what 3 means?
+
+
+# MACRI
+:macri plus_minus"#"imm24,bits_4_5_qq,dst_3 is bits_6_23=0x507 & bits_0_1=3 & plus_minus & bits_4_5_qq & dst_3; imm24
+{
+    
+}
+
+
+
+# Merge
+:merge bits_1_3_sss,dst_0 is bits_4_23=0xC1B8 & bits_1_3_sss & dst_0
 {
 }
 
+
+
+# X Memory Data Move w/ Relative Displacement
+:move "x":(bits_8_10r + imm24_s),bits_0_5_dddddd is (bits_11_23=0x14E & bit_7=1 & bit_6=0 & bits_8_10r & 
+                                                                                          bits_0_5_dddddd) ;
+                                                                                          imm24_s
+{
+    
+}
+
+:move bits_0_5_dddddd,"x":(bits_8_10r + imm24_s) is (bits_11_23=0x14E & bit_7=1 & bit_6=1 & bits_8_10r & 
+                                                                                          bits_0_5_dddddd) ;
+                                                                                          imm24_s
+{
+    
+}
+
+:move "x":(bits_8_10r + aaaaaaa_split),bits_0_3_DDDD is (bits_17_23=1 & bit_7=1 & bit_5=0 & bit_4=1) & bits_8_10r &
+                                                                                             aaaaaaa_split &
+                                                                                             bits_0_3_DDDD
+{
+     
+}
+
+:move bits_0_3_DDDD,"x":(bits_8_10r + aaaaaaa_split) is (bits_17_23=1 & bit_7=1 & bit_5=0 & bit_4=0) & bits_8_10r &
+                                                                                             aaaaaaa_split &
+                                                                                             bits_0_3_DDDD
+{
+     
+}
+
+# Y Memory Data Move w/ Relative Displacement
+:move "y":(bits_8_10r + imm24),bits_0_5_dddddd is (bits_10_23=0x16E & bit_7=1 & bit_6=0 & bits_8_10r & 
+                                                                                          bits_0_5_dddddd) ;
+                                                                                          imm24
+{
+    
+}
+
+:move bits_0_5_dddddd,"y":(bits_8_10r + imm24) is (bits_10_23=0x16E & bit_7=1 & bit_6=1 & bits_8_10r & 
+                                                                                          bits_0_5_dddddd) ;
+                                                                                          imm24
+{
+    
+}
+
+:move "y":(bits_8_10r + aaaaaaa_split),bits_0_3_DDDD is (bits_17_23=1 & bit_7=1 & bit_5=1 & bit_4=1) & bits_8_10r &
+                                                                                             aaaaaaa_split &
+                                                                                             bits_0_3_DDDD
+{
+     
+}
+
+:move bits_0_3_DDDD,"y":(bits_8_10r + aaaaaaa_split) is (bits_17_23=1 & bit_7=1 & bit_5=1 & bit_4=0) & bits_8_10r &
+                                                                                             aaaaaaa_split &
+                                                                                             bits_0_3_DDDD
+{
+     
+}
+
+# MOVEC
+with : (bits_17_23=0x2 & bit_5=1) ... {
+    with : (bit_16=1 & bit_7=0) ... {
+        with : bit_14=1 ... {
+            with :  bit_15_W=0 ... {
+                :movec bits_0_5_dddddd,eax is (bit_6_S=0 & bits_0_5_dddddd) ... & eax {}
+                :movec bits_0_5_dddddd,eay is (bit_6_S=1 & bits_0_5_dddddd) ... & eay {}
+            } 
+            with : bit_15_W=1 ... {
+                :movec eax,bits_0_5_dddddd is (bit_6_S=0 & bits_0_5_dddddd) ... & eax {}
+                :movec eay,bits_0_5_dddddd is (bit_6_S=1 & bits_0_5_dddddd) ... & eay {}
+            }
+        }
+        with : bit_14=0 ... {
+            with : bit_15_W=0 ... {
+                :movec bits_0_5_dddddd,aaaaaax is (bit_6_S=0 & bits_0_5_dddddd & aaaaaax) ... {}
+                :movec bits_0_5_dddddd,aaaaaay is (bit_6_S=1 & bits_0_5_dddddd & aaaaaay) ... {}
+            }
+            with : bit_15_W=1 ... {
+                :movec aaaaaax,bits_0_5_dddddd is (bit_6_S=0 & bits_0_5_dddddd & aaaaaax) ... {}
+                :movec aaaaaay,bits_0_5_dddddd is (bit_6_S=1 & bits_0_5_dddddd & aaaaaay) ... {}
+            }
+        }
+    }
+    with : (bit_16=0 & bit_14=1 & bits_5_7=0x5) ... {
+        with : bit_15_W=0 ... {
+            :movec bits_0_5_dddddd,bits_8_13_DDDDDD is (bits_0_5_dddddd & bits_8_13_DDDDDD) ... {}
+        }
+        with : bit_15_W=1 ... {
+            :movec bits_8_13_DDDDDD,bits_0_5_dddddd is (bits_0_5_dddddd & bits_8_13_DDDDDD) ... {}
+        }
+    }
+    with : (bit_16=1 & bits_5_7=0x5) ... {
+        :movec "#"iiiiiiii,bits_0_5_dddddd is (iiiiiiii & bits_0_5_dddddd) ... {bits_0_5_dddddd=zext(iiiiiiii);}
+    }
+}
+
+
+
+# MOVEM
+with : (bits_16_23=0x7 & bit_6=0) ... {
+    with : (bit_7=1 & bit_14=1) ... {
+        with : bit_15_W=0 ... {
+            :movem bits_0_5_dddddd,eap is bits_0_5_dddddd ... & eap {}
+        }
+        with : bit_15_W=1 ... {
+            :movem eap,bits_0_5_dddddd is bits_0_5_dddddd ... & eap {}
+        }
+    }
+    with : (bit_7=0 & bit_14=0) ... {
+        with : bit_15_W=0 ... {
+            :movem bits_8_13,eap is bits_8_13 ... & eap {}
+        }
+        with : bit_15_W=1 ... {
+            :movem eap,bits_8_13 is bits_8_13 ... & eap {}
+        }
+    }
+}
+
+
+
+# MOVEP
+with : (bits_17_23=0x4 & bit_14=1 & bit_7=1) ...  { #X: or Y: Reference (high I/O address)
+    with : bit_15_W=0 ...  {
+        :movep ppppppx,eax is (bit_16_s=0 & bit_6_S=0 & ppppppx) ... & eax {eax=ppppppx;}
+        :movep ppppppy,eax is (bit_16_s=1 & bit_6_S=0 & ppppppy) ... & eax {eax=ppppppy;}
+        :movep ppppppx,eay is (bit_16_s=0 & bit_6_S=1 & ppppppx) ... & eay {eay=ppppppx;}
+        :movep ppppppy,eay is (bit_16_s=1 & bit_6_S=1 & ppppppy) ... & eay {eay=ppppppy;}
+    }
+    with : bit_15_W=1 ...  {
+        :movep eax,ppppppx is (bit_16_s=0 & bit_6_S=0 & ppppppx) ... & eax {ppppppx=eax;}
+        :movep eax,ppppppy is (bit_16_s=1 & bit_6_S=0 & ppppppy) ... & eax {ppppppy=eax;}
+        :movep eay,ppppppx is (bit_16_s=0 & bit_6_S=1 & ppppppx) ... & eay {ppppppx=eay;}
+        :movep eay,ppppppy is (bit_16_s=1 & bit_6_S=1 & ppppppy) ... & eay {ppppppy=eay;}
+    }
+}
+
+with : (bits_16_23=0x7 & bit_14=1 & bit_7=0) ... { #X: or Y: Reference (low I/O address)
+    with : bit_15_W=0 ... {
+        :movep qqqqqqx,eax is (bit_6_S=0 & qqqqqqx) ... & eax {eax=qqqqqqx;}
+        :movep qqqqqqx,eay is (bit_6_S=1 & qqqqqqx) ... & eay {eay=qqqqqqx;}
+    }
+    with : bit_15_W=1 ... {
+        :movep eax,qqqqqqx is (bit_6_S=0 & qqqqqqx) ... & eax {qqqqqqx=eax;}
+        :movep eay,qqqqqqx is (bit_6_S=1 & qqqqqqx) ... & eay {qqqqqqx=eay;}
+    }
+}
+
+with : (bits_16_23=0x7 & bit_14=0 & bit_7=1) ... { #X: or Y: Reference (low I/O address)
+    with : bit_15_W=0 ... {
+        :movep qqqqqqy,eax is (bit_6_S=0 & qqqqqqy) ... & eax {eax=qqqqqqy;}
+        :movep qqqqqqy,eay is (bit_6_S=1 & qqqqqqy) ... & eay {eay=qqqqqqy;}
+    }
+    with : bit_15_W=1 ... {
+        :movep eax,qqqqqqy is (bit_6_S=0 & qqqqqqy) ... & eax {qqqqqqy=eax;}
+        :movep eay,qqqqqqy is (bit_6_S=1 & qqqqqqy) ... & eay {qqqqqqy=eay;}
+    }
+}
+
+with : (bits_17_23=0x4 & bit_14=1 & bits_6_7=1) ... { #P: Reference (high I/O address)
+    with : bit_15_W=0 ... {
+        :movep ppppppx,eap is (bit_16_s=0 & ppppppx) ... & eap {eap=ppppppx;}
+        :movep ppppppy,eap is (bit_16_s=1 & ppppppy) ... & eap {eap=ppppppy;}
+    }
+    with : bit_15_W=1 ... {
+        :movep eap,ppppppx is (bit_16_s=0 & ppppppx) ... & eap {ppppppx=eap;}
+        :movep eap,ppppppy is (bit_16_s=1 & ppppppy) ... & eap {ppppppy=eap;}
+    }
+}
+
+with : (bits_15_23=0x1 & bit_7=0) ... { #P: Reference (low I/O address)
+    with : bit_14_W=0 ... {
+        :movep ppppppx,eap is (bit_6_S=0 & ppppppx) ... & eap {eap=ppppppx;}
+        :movep ppppppy,eap is (bit_6_S=1 & ppppppy) ... & eap {eap=ppppppy;}
+    }
+    with : bit_14_W=1 ... {
+        :movep eap,ppppppx is (bit_6_S=0 & ppppppx) ... & eap {ppppppx=eap;}
+        :movep eap,ppppppy is (bit_6_S=1 & ppppppy) ... & eap {ppppppy=eap;}
+    }
+}
+
+with : (bits_17_23=0x4 & bit_14=1 & bits_6_7=0) { # Register Reference (high I/O address)
+    with : bit_15_W=0 {
+        :movep bits_8_13_DDDDDD,ppppppx is (bit_16_s=0 & ppppppx & bits_8_13_DDDDDD) {ppppppx=bits_8_13_DDDDDD;}
+        :movep bits_8_13_DDDDDD,ppppppy is (bit_16_s=1 & ppppppy & bits_8_13_DDDDDD) {ppppppy=bits_8_13_DDDDDD;}
+    }
+    with : bit_15_W=1 {
+        :movep ppppppx,bits_8_13_DDDDDD is (bit_16_s=0 & ppppppx & bits_8_13_DDDDDD) {bits_8_13_DDDDDD=ppppppx;}
+        :movep ppppppy,bits_8_13_DDDDDD is (bit_16_s=1 & ppppppy & bits_8_13_DDDDDD) {bits_8_13_DDDDDD=ppppppy;}
+    }
+    
+}
+
+with : (bits_16_23=0x4 & bit_14=1) { # Register Reference (low I/O address)
+    with : bit_15_W=0 {
+        :movep qqqqqq_split_x,bits_8_13_DDDDDD is bit_7=1 & bit_5=0 & bits_8_13_DDDDDD & qqqqqq_split_x 
+        {
+            bits_8_13_DDDDDD=qqqqqq_split_x;
+        }
+        :movep qqqqqq_split_y,bits_8_13_DDDDDD is bit_7=0 & bit_5=1 & bits_8_13_DDDDDD & qqqqqq_split_y 
+        {
+            bits_8_13_DDDDDD=qqqqqq_split_y;
+        }
+    }
+    with : bit_15_W=1 {
+        :movep bits_8_13_DDDDDD,qqqqqq_split_x is bit_7=1 & bit_5=0 & bits_8_13_DDDDDD & qqqqqq_split_x 
+        {
+            qqqqqq_split_x=bits_8_13_DDDDDD;
+        }
+        :movep bits_8_13_DDDDDD,qqqqqq_split_y is bit_7=0 & bit_5=1 & bits_8_13_DDDDDD & qqqqqq_split_y 
+        {
+            qqqqqq_split_y=bits_8_13_DDDDDD;
+        }
+    }
+    
+}
+
+
+
+:mpy plus_minus^bits_4_5_QQ,"#"bits_8_13,dst_3 is bits_12_23=0x10 & bits_6_7=3 & bits_0_1=0 & 
+                                                                                 plus_minus & 
+                                                                                 bits_4_5_QQ & 
+                                                                                 bits_8_13 & 
+                                                                                 dst_3
+{
+    dst_3 = zext(bits_4_5_QQ * bits_8_13:3);
+}
+
+
+:mpy^sign_unsign plus_minus_bit_4^bits_0_3_QQQQ_op1,bits_0_3_QQQQ_op2,dst_5 is bits_7_23=0x24F & 
+                                                                               sign_unsign & 
+                                                                               plus_minus_bit_4 & 
+                                                                               bits_0_3_QQQQ_op1 &
+                                                                               bits_0_3_QQQQ_op2 &
+                                                                               dst_5
+{
+       
+}
+
+:mpyi plus_minus"#"imm24,bits_4_5_qq,dst_3 is bits_6_23=0x507 & bits_0_1=0 & plus_minus & bits_4_5_qq & dst_3; imm24
+{
+	
+}
+
+:mpyr plus_minus^bits_4_5_QQ,"#"bits_8_12,dst_3 is  bits_13_23=0x8 & bits_6_7=0x3 & bits_0_1=1 & plus_minus &
+                                                                                                 bits_4_5_QQ &
+                                                                                                 bits_8_12 &
+                                                                                                 dst_3
+{
+    
+}
+   
+:mpyri plus_minus^bits_4_5_qq,"#"imm24,dst_3 is  bits_6_23=0x507 & bits_0_1=1 & plus_minus &
+                                                                                 bits_4_5_qq &
+                                                                                 dst_3 ; imm24
+{
+    
+}                                                                                             
+
+#NOP 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 :nop is (op=0x0)
+{ 
+    PC=PC+1;
+} 
+
+:norm bits_8_10r,dst_3 is bits_11_23=0x3B & bits_4_7=1 & bits_0_2=0x5 & dst_3 & bits_8_10r
 {
+	
 }
+
+:normf bits_1_3_sss,dst_0 is bits_4_23=0xC1E2 & dst_0 & bits_1_3_sss 
+{
+	
+}
+
+
+:or "#"bits_8_13_iiiiii,dst_3 is bits_14_23=0x5 & bits_4_7=0x8 & bits_0_2=2 & bits_8_13_iiiiii & dst_3
+{
+
+}
+
+:or "#"imm24,dst_3 is bits_4_23=0x140C & bits_0_2=2 & dst_3; imm24
+{
+	dst_3 = dst_3 | (imm24 >> 24);
+}
+
+:or("i") "#"iiiiiiii, bits_0_1_ee is bits_16_23=0 & bits_2_7=0x3e & iiiiiiii & bits_0_1_ee
+{
+	bits_0_1_ee = bits_0_1_ee|iiiiiiii;
+}
+
+:pflush is  op=0x3
+{
+	
+}
+
+:pflushun is op=0x1
+{
+	
+}
+
+:pfree is op=0x2
+{
+	
+}
+
+:plock eap is (bits_14_23=0x2F & bits_0_7=0x81) ... & eap
+{
+	
+}
+
+:plockr imm24_disp is op=0xF; imm24 [imm24_disp=inst_start / 3 + imm24;]
+{
+	
+}
+
+:punlock eap is (bits_14_23=0x2b & bits_0_7=0x81) ... & eap
+{
+	
+}
+
+:punlockr imm24_disp is op=0xE; imm24 [imm24_disp=inst_start / 3 + imm24;]
+{
+	
+}
+
+:rep "x":eax is (bits_14_23=0x19 & bits_6_7=0 & bits_0_5=0x20) ... & eax
+{
+	LC = eax;
+	<loopstart>
+	goto inst_next;
+	LC = LC - 1;
+	if (LC s> 0) goto <loopstart>;
+	
+}
+
+:rep "y":eay is (bits_14_23=0x19 & bits_6_7=1 & bits_0_5=0x20) ... & eay
+{
+	
+}
+
+:rep "x":aaaaaa is bits_14_23=0x18 & bits_6_7=0 & bits_0_5=0x20 & aaaaaa
+{
+	
+}
+
+:rep "y":aaaaaa is bits_14_23=0x18 & bits_6_7=1 & bits_0_5=0x20 & aaaaaa
+{
+	
+}
+
+hhhhiiiiiiii: imm_short_data is op [imm_short_data= ((op >> 8) & 0b11111111) | ((op & 0b1111) << 8);] 
+{
+    export *[const]:2 imm_short_data;
+}
+
+:rep "#"hhhhiiiiiiii is bits_16_23=0x6 & bits_4_7=0xa & hhhhiiiiiiii
+{
+	
+}
+
+:rep bits_8_13_DDDDDD is bits_14_23=0x1B & bits_0_7=0x20 & bits_8_13_DDDDDD 
+{
+    
+}
+
+#RESET 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 
+:reset is (op=0x84) 
+{
+    
+} 
+
+
+
+:rti is op=0x4
+{
+	PC = SSH;
+	SR = SSL; 
+    SP = SP -1; 
+}
+
+#RTS 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0
+:rts is (op=0xC)
+{ 
+    PC = SSH; 
+    SP = SP -1; 
+    return [SP];
+} 
+
+
+
+:stop is op=0x87
+{
+	
+}
+
+
+
+:sub "#"bits_8_13_iiiiii,dst_3 is bits_14_23=0x5 & bits_4_7=0x8 & bits_0_2=0x4 & dst_3 & bits_8_13_iiiiii
+{
+	
+}
+
+:sub "#"imm24,dst_3 is bits_4_23=0x140c & bits_0_2=0x4 & dst_3; imm24
+{
+	
+} 
+
+
+
+
+
+
+bits_12_15_cccc: "cc" is bits_12_15=0 {}
+bits_12_15_cccc: "ge" is bits_12_15=1 {}
+bits_12_15_cccc: "ne" is bits_12_15=2 {}
+bits_12_15_cccc: "pl" is bits_12_15=3 {}
+bits_12_15_cccc: "nn" is bits_12_15=4 {}
+bits_12_15_cccc: "ec" is bits_12_15=5 {}
+bits_12_15_cccc: "lc" is bits_12_15=6 {}
+bits_12_15_cccc: "gt" is bits_12_15=7 {}
+bits_12_15_cccc: "cs" is bits_12_15=8 {}
+bits_12_15_cccc: "lt" is bits_12_15=9 {}
+bits_12_15_cccc: "eq" is bits_12_15=10 {}
+bits_12_15_cccc: "mi" is bits_12_15=11 {}
+bits_12_15_cccc: "nr" is bits_12_15=12 {}
+bits_12_15_cccc: "es" is bits_12_15=13 {}
+bits_12_15_cccc: "ls" is bits_12_15=14 {}
+bits_12_15_cccc: "le" is bits_12_15=15 {}
+
+:T^bits_12_15_cccc source_jjj,dst_3 is bits_16_23=0x2 & bits_7_11=0 & bits_0_2=0 & bits_12_15_cccc & 
+                                                                                   source_jjj & 
+                                                                                   dst_3
+{
+	
+}
+:T^bits_12_15_cccc source_jjj,dst_3 bits_8_10r,bits_0_2r is bits_16_23=0x3 & bit_11=0 & bit_7=0 & 
+													                                    bits_12_15_cccc & 
+													                                    source_jjj & 
+													                                    dst_3 & 
+													                                    bits_8_10r & 
+													                                    bits_0_2r
+{
+	
+}
+
+:T^bits_12_15_cccc bits_8_10r,bits_0_2r is bits_16_23=0x2 & bit_11=1 & bits_3_7=0 & 
+										   bits_12_15_cccc & bits_8_10r & bits_0_2r
+{
+	
+}
+	
+
+
+
+
+:trap is op=0x6
+{
+	
+}
+
+:TRAP^bits_0_3_cccc is  bits_4_23=0x1 & bits_0_3_cccc
+{
+	
+}
+
+
+:vsl bit_16_d,bit_4,"L":eap is (bit_16_d & bit_4 & bits_17_23=0x5 & bits_14_15=0x3 & bits_5_7=0x6 & bits_0_3=0) 
+							   ... & eap
+{
+	
+}
+
+:wait is op=0x86
+{
+	
+}
+
+
+
+
+@include "DSP563xx_parallelops.sinc"
+
+
+
+
+

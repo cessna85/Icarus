@@ -3,15 +3,25 @@
 <processor_spec>
   <programcounter register="PC"/>
   
+  <volatile outputop="write" inputop="read">
+    <range space="p" first="0x0" last="0xFFFFFF"/>
+    <range space="x" first="0x0" last="0xFFFFFF"/>
+    <range space="y" first="0x0" last="0xFFFFFF"/>
+  </volatile>
+  
   <default_symbols>
     <symbol name="PORTA" address="0"/>
   </default_symbols>
 
-  <!--
+  
       <default_memory_blocks>
-        <memory_block name="X_RAM" start_address="0x0" length="0x20000" initialized="true"/>
-        <memory_block name="Y_RAM" start_address="0x0" length="0x20000" initialized="true"/>    
+        <memory_block name="Bootstrap ROM" start_address="p:0xFF0000" length="0xBF" initialized="true" mode="r"/>
+        <memory_block name="Program ROM" start_address="p:0xFF00C0" length="0xFF3F" initialized="true" mode="r"/>
+        <memory_block name="X Memory" start_address="x:0x0" length="0x24000" initialized="false"/>
+        <memory_block name="X Memory I/O" start_address="x:0xFFFF80" length="0x80" initialized="false"/>
+        <memory_block name="Y Memory" start_address="y:0x0" length="0x24000" initialized="false"/>
+        <memory_block name="Y Memory I/O" start_address="y:0xFFFF80" length="0x80" initialized="false"/>    
       </default_memory_blocks>
-  -->
+  
   
 </processor_spec>

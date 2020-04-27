@@ -4,9 +4,9 @@
   <global>
     <range space="p"/>
   </global>
-  <stackpointer register="R6" space="y" growth="positive"/>
+  <stackpointer register="SP" space="p" growth="positive"/>
   <returnaddress>
-    <varnode space="stack" offset="1" size="2"/>
+    <varnode space="p" offset="0" size="3"/>
   </returnaddress>
   <default_proto>
     <prototype name="__stdcall" extrapop="0" stackshift="0" strategy="register">
@@ -21,7 +21,7 @@
         </pentry>
       </output>
       <unaffected>
-        <register name="R6"/>
+        <register name="R0"/>
       </unaffected>
     </prototype>
   </default_proto>

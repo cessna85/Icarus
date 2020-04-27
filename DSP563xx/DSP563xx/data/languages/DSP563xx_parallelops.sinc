@@ -1,0 +1,208 @@
+#parallelop instructions
+
+# ABS D = Absolute Value
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 1 0 d 1 1 0
+# Optional Effective Address Extension
+:abs dst_3 ^parallelop is (bits_4_7=0x2 & bits_0_2=0x6 & dst_3) ... & parallelop
+{
+    dst_3 = abs(dst_3);
+}
+
+# ADD S,D = Add
+# 23                8 7     4       0
+# Data Bus Move Field 0 J J J d 0 0 0
+# Optional Effective Address Extension
+:add jjj","dst_3 ^parallelop is (bit_7=0 & bits_0_2=0 & dst_3 & jjj & (bit_4|bit_5|bit_6)) ... & parallelop
+{
+	
+}
+
+# S
+# bit_3=0 -> B
+# bit_3=1 -> A
+
+# D
+# bit_3=0 -> A
+# bit_3=1 -> B
+
+# ADDL S,D = Shift Left and Add Accumulators
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 0 1 d 0 1 0
+# Optional Effective Address Extension
+:addl addl_s","addl_d ^parallelop is ((bits_4_7=0x1 & bits_0_2=0x2) & addl_s & addl_d) ... & parallelop
+{
+	
+}
+
+
+# ADDR S,D = Shift Right and Add Accumulators
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 0 0 d 0 1 0
+# Optional Effective Address Extension
+:addr addl_s","addl_d ^parallelop is ((bits_4_7=0 & bits_0_2=0x2) & addl_s & addl_d) ... & parallelop
+{
+	
+}
+
+
+
+
+# AND S,D = Logical AND
+# 23                8 7     4       0
+# Data Bus Move Field 0 1 J J d 1 1 0
+# Optional Effective Address Extension
+:and and_jj","and_d ^parallelop is ((bits_6_7=0x1 & bits_0_2=0x6) & and_jj & and_d) ... & parallelop
+{
+	
+}
+
+# ASL D = Arithmetic Shift Accumulator Left
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 1 1 d 0 1 0
+# Optional Effective Address Extension
+:asl addl_d ^parallelop is ((bits_4_7=0x3 & bits_0_2=0x2) & addl_d) ... & parallelop
+{
+	
+}
+
+# ASR D = Arithmetic Shift Accumulator Right
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 1 0 d 0 1 0
+# Optional Effective Address Extension
+:asr addl_d ^parallelop is ((bits_4_7=0x2 & bits_0_2=0x2) & addl_d) ... & parallelop
+{
+	
+}
+
+# CLR D = Clear Accumulator
+# 23                8 7     4       0
+# Data Bus Move Field 0 0 0 1 d 0 1 1
+# Optional Effective Address Extension
+:clr clr_d ^parallelop is ((bits_4_7=0x1 & bits_0_2=0x3) & clr_d) ... & parallelop
+{
+    
+}
+
+# CMP S1, S2 = Compare
+# 23                8 7     4       0
+# Data Bus Move Field 0 J J J d 1 0 1
+# Optional Effective Address Extension
+:cmp jjj","dst_3 ^parallelop is ((bits_0_2=0x5 & bit_7=0) & dst_3 & jjj)... & parallelop
+{
+    
+}
+
+# CMPM S1, S2 = Compare Magnitude
+# 23                8 7     4       0
+# Data Bus Move Field 0 J J J d 1 1 1
+# Optional Effective Address Extension
+:cmpm source_jjj","dst_3 ^parallelop is ((bits_0_2=0x7 & bit_7=0) & dst_3 & source_jjj)... & parallelop
+{
+    
+}
+
+:lsl dst_3 is (bits_4_7=3 & bits_0_2=3 & dst_3) ... & parallelop
+{
+    
+}
+
+:lsr dst_3 is (bits_4_7=2 & bits_0_2=3 & dst_3) ... & parallelop
+{
+    
+}
+
+:mac plus_minus^bits_4_6_QQQ_op1,bits_4_6_QQQ_op2,dst_3 parallelop is (bits_0_1=2 & bit_7=1 & plus_minus & bits_4_6_QQQ_op1 & bits_4_6_QQQ_op2 & dst_3) ... & parallelop
+{
+    
+}
+:macr plus_minus^bits_4_6_QQQ_op1,bits_4_6_QQQ_op2,dst_3 parallelop is (bits_0_1=3 & bit_7=1 & bits_4_6_QQQ_op1 & bits_4_6_QQQ_op2 & dst_3 & plus_minus) ... & parallelop
+{
+    
+}
+
+:max dst_3_opposite,dst_3 is (bits_0_7=0x1D & dst_3 & dst_3_opposite) ... & parallelop
+{
+    
+}
+
+:maxm  dst_3,dst_3_opposite is (bits_0_7=0x15 & dst_3 & dst_3_opposite)  ... & parallelop
+{
+    
+}
+
+:move parallelop is bits_0_7=0 ... & parallelop
+{
+    
+}
+:mpy plus_minus^bits_4_6_QQQ_op1,bits_4_6_QQQ_op2,dst_3 parallelop is (bit_7=1 & bits_0_1=0 & plus_minus & bits_4_6_QQQ_op1 & bits_4_6_QQQ_op2 & dst_3) ... & parallelop 
+{
+	
+}
+
+:mpyr plus_minus^bits_4_6_QQQ_op1,bits_4_6_QQQ_op2,dst_3 parallelop is (bit_7=1 & bits_0_1=1 & plus_minus & bits_4_6_QQQ_op1 & bits_4_6_QQQ_op2 & dst_3) ... & parallelop
+{
+    
+}
+:neg dst_3 parallelop is (bits_4_7=0x3 & bits_0_2=0x6 & dst_3) ... & parallelop
+{
+	dst_3 = -dst_3;
+}
+
+:not dst_3 parallelop is (bits_4_7=1 & bits_0_2=7 & dst_3) ... & parallelop
+{
+	
+}
+
+:or bits_4_5_jj,dst_3 parallelop is (bits_0_2=0x2 & bits_6_7=1 & bits_4_5_jj & dst_3) ... & parallelop
+{
+	dst_3 = dst_3 | zext(bits_4_5_jj >> 24);
+}
+
+:rnd dst_3 parallelop is (bits_4_7=1 & bits_0_2=1 & dst_3) ... & parallelop
+{
+	
+}
+
+:rol dst_3 parallelop is (bits_4_7=0x3 & bits_0_2=0x7 & dst_3) ... & parallelop
+{
+	
+}
+
+:ror dst_3 parallelop is (bits_4_7=0x2 & bits_0_2=7 & dst_3) ... & parallelop
+{
+	
+}
+
+:sbc bit_4_j,dst_3 parallelop is (bits_5_7=1 & bits_0_2=0x5 & bit_4_j & dst_3) ... & parallelop
+{
+	
+}
+
+:sub jjj,dst_3 parallelop is (bit_7=0 & bits_0_3=0x4 & jjj & dst_3 & (bit_4|bit_5|bit_6)) ... & parallelop
+{
+	
+}
+
+:subl dst_3_opposite, dst_3 parallelop is (bits_4_7=1 & bits_0_2=0x6 & dst_3 & dst_3_opposite) ... & parallelop
+{
+	
+}
+
+:subr dst_3_opposite, dst_3 parallelop is (bits_4_7=0 & bits_0_2=0x6 & dst_3 & dst_3_opposite) ... & parallelop
+{
+	
+}
+
+:tfr source_jjj,dst_3 parallelop is (bit_7=0 & bits_0_2=0x1 & source_jjj & dst_3) ... & parallelop
+{
+	
+}
+
+:tst dst_3 parallelop is (bits_4_7=0 & bits_0_2=3 & dst_3) ... & parallelop
+{
+	
+}
+
+
+
