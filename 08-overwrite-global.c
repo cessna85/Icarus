@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 unsigned long x;
+unsigned long y;
 
 int vulnerable() {
 	printf("> ");
